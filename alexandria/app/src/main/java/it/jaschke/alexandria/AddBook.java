@@ -23,6 +23,7 @@ import android.widget.Toast;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
+import it.jaschke.alexandria.utils.AppUtils;
 
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -78,6 +79,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     clearFields();
                     return;
                 }
+
+                if (!AppUtils.isNetworkAvailable(getActivity())) {
+                    Context context = getActivity();
+                    String msg = context.getString(R.string.network_not_available);
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                    return;
+                    }
+
                 //Once we have an ISBN, start a book intent
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
                 bookIntent.putExtra(BookService.EAN, ean);
