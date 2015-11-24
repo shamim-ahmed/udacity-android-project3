@@ -31,6 +31,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+                android:name=".BarCodeScanActivity"
+                android:label="@string/title_barcode_scan"/>
 
 
 
