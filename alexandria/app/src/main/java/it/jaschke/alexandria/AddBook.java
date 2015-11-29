@@ -28,6 +28,7 @@ import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
 import it.jaschke.alexandria.utils.AppUtils;
 import it.jaschke.alexandria.utils.Constants;
+import it.jaschke.alexandria.utils.StringUtils;
 
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -52,7 +53,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (ean != null) {
-            outState.putString(EAN_CONTENT, ean.getText().toString());
+            String isbn = ean.getText().toString();
+
+            if (!StringUtils.isBlank(isbn)) {
+                outState.putString(EAN_CONTENT, isbn);
+                Log.i(LOG_TAG, String.format("saved the isbn %s", isbn));
+            }
         }
     }
 
@@ -62,6 +68,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
+
+        if (savedInstanceState != null) {
+            String isbn = savedInstanceState.getString(EAN_CONTENT, null);
+
+            if (!StringUtils.isBlank(isbn)) {
+                ean.setText(isbn);
+                Log.i(LOG_TAG, String.format("retrieved the isbn %s", isbn));
+            }
+        }
 
         ean.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,6 +123,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 Context context = getActivity();
                 Intent scanIntent = new Intent(context, BarCodeScanActivity.class);
                 context.startActivity(scanIntent);
+                clearBarcodeValue();
                 ean.setText("");
             }
         });
@@ -141,13 +157,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onResume() {
         super.onResume();
-        ean.setText("");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String barcode = prefs.getString(Constants.SCANNED_BARCODE_KEY, null);
         Log.i(LOG_TAG, String.format("the scanned barcode is : %s", barcode));
 
-        if (ean != null) {
+        if (ean != null && barcode != null) {
             ean.setText(barcode);
         }
     }
@@ -229,6 +244,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(Constants.SCANNED_BARCODE_KEY);
-        editor.apply();;
+        editor.apply();
     }
 }
