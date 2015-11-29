@@ -108,6 +108,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 Context context = getActivity();
                 Intent scanIntent = new Intent(context, BarCodeScanActivity.class);
                 context.startActivity(scanIntent);
+                ean.setText("");
             }
         });
 
@@ -140,6 +141,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onResume() {
         super.onResume();
+        ean.setText("");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String barcode = prefs.getString(Constants.SCANNED_BARCODE_KEY, null);
