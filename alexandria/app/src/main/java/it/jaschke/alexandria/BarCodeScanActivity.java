@@ -41,9 +41,13 @@ public class BarCodeScanActivity extends Activity implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result result) {
+        saveBarcode(result.getText());
+    }
+
+    private void saveBarcode(String barcode) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.SCANNED_BARCODE_KEY, result.getText());
+        editor.putString(Constants.SCANNED_BARCODE_KEY, barcode);
         editor.apply();
     }
 }

@@ -31,6 +31,7 @@ import it.jaschke.alexandria.utils.Constants;
 
 
 public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String LOG_TAG = AddBook.class.getSimpleName();
     private static final String TAG = "INTENT_TO_SCAN_ACTIVITY";
     private EditText ean;
     private final int LOADER_ID = 1;
@@ -50,20 +51,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(ean!=null) {
+        if (ean != null) {
             outState.putString(EAN_CONTENT, ean.getText().toString());
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Log.i("shamim", "the scanned barcode is : " + prefs.getString(Constants.SCANNED_BARCODE_KEY, null));
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        clearBarcodeValue();
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
@@ -142,6 +137,19 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String barcode = prefs.getString(Constants.SCANNED_BARCODE_KEY, null);
+        Log.i(LOG_TAG, String.format("the scanned barcode is : %s", barcode));
+
+        if (ean != null) {
+            ean.setText(barcode);
+        }
+    }
+
     private void restartLoader(){
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
@@ -213,5 +221,12 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.scan);
+    }
+
+    private void clearBarcodeValue() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(Constants.SCANNED_BARCODE_KEY);
+        editor.apply();;
     }
 }
