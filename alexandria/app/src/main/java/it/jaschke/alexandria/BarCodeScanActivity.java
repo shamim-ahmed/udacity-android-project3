@@ -3,8 +3,11 @@ package it.jaschke.alexandria;
 import com.google.zxing.Result;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
+
+import it.jaschke.alexandria.utils.Constants;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -38,6 +41,9 @@ public class BarCodeScanActivity extends Activity implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result result) {
-        Log.i(TAG, "the scanned code is : " + result.getText());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.SCANNED_BARCODE_KEY, result.getText());
+        editor.apply();
     }
 }
