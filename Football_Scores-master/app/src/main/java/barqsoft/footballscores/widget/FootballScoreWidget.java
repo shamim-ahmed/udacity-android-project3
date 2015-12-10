@@ -5,8 +5,10 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
+import barqsoft.footballscores.Constants;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 
@@ -34,6 +36,15 @@ public class FootballScoreWidget extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_root_layout, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, views);
+        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+            Log.i("shamim", "update event received !!!");
         }
     }
 }

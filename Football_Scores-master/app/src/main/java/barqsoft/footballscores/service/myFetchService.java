@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import barqsoft.footballscores.Constants;
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.R;
 
@@ -91,6 +92,7 @@ public class myFetchService extends IntentService
         catch (Exception e)
         {
             Log.e(LOG_TAG,"Exception here" + e.getMessage());
+            Log.e("shamim", "exception", e);
         }
         finally {
             if(m_connection != null)
@@ -265,7 +267,11 @@ public class myFetchService extends IntentService
             inserted_data = mContext.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
 
-            //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
+            // broadcast the database change for the widgets
+            Intent dataUpdatedIntent = new Intent(Constants.ACTION_DATA_UPDATED);
+            getApplicationContext().sendBroadcast(dataUpdatedIntent);
+
+            Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
         }
         catch (JSONException e)
         {

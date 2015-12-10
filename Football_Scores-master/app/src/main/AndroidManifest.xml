@@ -39,6 +39,7 @@
                   android:label="Football Score Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="barqsoft.footballscores.action.DATA_UPDATED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/widget_info_football_scores"/>
