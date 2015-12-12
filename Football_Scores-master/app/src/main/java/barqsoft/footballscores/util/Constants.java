@@ -1,8 +1,5 @@
-package barqsoft.footballscores;
+package barqsoft.footballscores.util;
 
-/**
- * Created by shamim on 10/12/15.
- */
 public class Constants {
     public static final String ACTION_DATA_UPDATED = "barqsoft.footballscores.action.DATA_UPDATED";
 

@@ -35,7 +35,7 @@
         </activity>
         <service android:name=".service.MyFetchService" />
 
-        <receiver android:name=".widget.FootballScoreWidget"
+        <receiver android:name=".FootballScoreWidget"
                   android:label="Football Score Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

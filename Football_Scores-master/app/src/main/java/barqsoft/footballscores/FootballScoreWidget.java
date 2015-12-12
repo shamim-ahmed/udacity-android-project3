@@ -1,4 +1,4 @@
-package barqsoft.footballscores.widget;
+package barqsoft.footballscores;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -15,15 +15,13 @@ import android.widget.RemoteViews;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import barqsoft.footballscores.Constants;
-import barqsoft.footballscores.DatabaseContract;
-import barqsoft.footballscores.MainActivity;
-import barqsoft.footballscores.R;
-import barqsoft.footballscores.Utilities;
+import barqsoft.footballscores.util.Constants;
+import barqsoft.footballscores.util.Utilities;
 
 public class FootballScoreWidget extends AppWidgetProvider {
     private static final String TAG = FootballScoreWidget.class.getSimpleName();
     private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final String INVALID_SCORE = "-1";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -56,15 +54,26 @@ public class FootballScoreWidget extends AppWidgetProvider {
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 
-        Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, null);
+        String sortOrder = String.format("%s, %s", DatabaseContract.ScoresTable.DATE_COL, DatabaseContract.ScoresTable.TIME_COL);
+        Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, sortOrder);
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             ContentValues values = readCursor(cursor);
 
-            String scoreStr = String.format("%s - %s",
-                    values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL),
-                    values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL));
+            String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
+
+            if (INVALID_SCORE.equals(homeGoals)) {
+                homeGoals = "";
+            }
+
+            String awayGoals = values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
+
+            if (INVALID_SCORE.equals(awayGoals)) {
+                awayGoals = "";
+            }
+
+            String scoreStr = String.format("%s - %s", homeGoals, awayGoals);
             int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
             int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
 

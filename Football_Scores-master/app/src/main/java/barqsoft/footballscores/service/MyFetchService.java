@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import barqsoft.footballscores.Constants;
+import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.R;
 
@@ -268,8 +268,9 @@ public class MyFetchService extends IntentService
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
 
             // broadcast the database change for the widgets
-            Intent dataUpdatedIntent = new Intent(Constants.ACTION_DATA_UPDATED);
-            getApplicationContext().sendBroadcast(dataUpdatedIntent);
+            Context context = getApplicationContext();
+            Intent dataUpdatedIntent = new Intent(Constants.ACTION_DATA_UPDATED).setPackage(context.getPackageName());
+            context.sendBroadcast(dataUpdatedIntent);
 
             Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
         }
