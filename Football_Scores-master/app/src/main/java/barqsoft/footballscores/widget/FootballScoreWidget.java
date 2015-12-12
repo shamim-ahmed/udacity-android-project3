@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -20,6 +19,7 @@ import barqsoft.footballscores.Constants;
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.Utilities;
 
 public class FootballScoreWidget extends AppWidgetProvider {
     private static final String TAG = FootballScoreWidget.class.getSimpleName();
@@ -65,8 +65,8 @@ public class FootballScoreWidget extends AppWidgetProvider {
             String scoreStr = String.format("%s - %s",
                     values.getAsString(DatabaseContract.scores_table.HOME_GOALS_COL),
                     values.getAsString(DatabaseContract.scores_table.AWAY_GOALS_COL));
-            int homeIconResourceId = R.drawable.arsenal;
-            int awayIconResourceId = R.drawable.liverpool;
+            int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.scores_table.HOME_COL));
+            int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.scores_table.AWAY_COL));
 
             views.setImageViewResource(R.id.home_crest, homeIconResourceId);
             views.setImageViewResource(R.id.away_crest, awayIconResourceId);
