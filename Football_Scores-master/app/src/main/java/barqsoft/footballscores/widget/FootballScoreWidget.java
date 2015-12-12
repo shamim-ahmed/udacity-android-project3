@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -49,7 +50,7 @@ public class FootballScoreWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
 
         if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
@@ -59,8 +60,7 @@ public class FootballScoreWidget extends AppWidgetProvider {
             String dateStr = dateFormatter.format(new Date());
             Uri searchUri = DatabaseContract.scores_table.buildScoreWithDate();
 
-            Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[] {dateStr}, null);
-            Log.i(TAG, "The count is : " + cursor.getCount());
+            Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, null);
             cursor.close();
         }
     }
