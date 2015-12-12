@@ -54,7 +54,7 @@ public class FootballScoreWidget extends AppWidgetProvider {
     private void updateView(Context context, RemoteViews views) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
         String dateStr = dateFormatter.format(new Date());
-        Uri searchUri = DatabaseContract.scores_table.buildScoreWithDate();
+        Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 
         Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, null);
 
@@ -63,16 +63,17 @@ public class FootballScoreWidget extends AppWidgetProvider {
             ContentValues values = readCursor(cursor);
 
             String scoreStr = String.format("%s - %s",
-                    values.getAsString(DatabaseContract.scores_table.HOME_GOALS_COL),
-                    values.getAsString(DatabaseContract.scores_table.AWAY_GOALS_COL));
-            int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.scores_table.HOME_COL));
-            int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.scores_table.AWAY_COL));
+                    values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL),
+                    values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL));
+            int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
+            int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
 
             views.setImageViewResource(R.id.home_crest, homeIconResourceId);
             views.setImageViewResource(R.id.away_crest, awayIconResourceId);
-            views.setTextViewText(R.id.home_name, values.getAsString(DatabaseContract.scores_table.HOME_COL));
-            views.setTextViewText(R.id.away_name, values.getAsString(DatabaseContract.scores_table.AWAY_COL));
+            views.setTextViewText(R.id.home_name, values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
+            views.setTextViewText(R.id.away_name, values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
             views.setTextViewText(R.id.score_textview, scoreStr);
+            views.setTextViewText(R.id.data_textview, values.getAsString(DatabaseContract.ScoresTable.TIME_COL));
         }
 
         cursor.close();
@@ -80,15 +81,17 @@ public class FootballScoreWidget extends AppWidgetProvider {
 
     private ContentValues readCursor(Cursor cursor) {
         ContentValues values = new ContentValues();
-        int homeColumnIndex = cursor.getColumnIndex(DatabaseContract.scores_table.HOME_COL);
-        int awayColumnIndex = cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_COL);
-        int homeGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.scores_table.HOME_GOALS_COL);
-        int awayGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.scores_table.AWAY_GOALS_COL);
+        int homeColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.HOME_COL);
+        int awayColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.AWAY_COL);
+        int homeGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.HOME_GOALS_COL);
+        int awayGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
+        int timeColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.TIME_COL);
 
-        values.put(DatabaseContract.scores_table.HOME_COL, cursor.getString(homeColumnIndex));
-        values.put(DatabaseContract.scores_table.AWAY_COL, cursor.getString(awayColumnIndex));
-        values.put(DatabaseContract.scores_table.HOME_GOALS_COL, cursor.getString(homeGoalsColumnIndex));
-        values.put(DatabaseContract.scores_table.AWAY_GOALS_COL, cursor.getString(awayGoalsColumnIndex));
+        values.put(DatabaseContract.ScoresTable.HOME_COL, cursor.getString(homeColumnIndex));
+        values.put(DatabaseContract.ScoresTable.AWAY_COL, cursor.getString(awayColumnIndex));
+        values.put(DatabaseContract.ScoresTable.HOME_GOALS_COL, cursor.getString(homeGoalsColumnIndex));
+        values.put(DatabaseContract.ScoresTable.AWAY_GOALS_COL, cursor.getString(awayGoalsColumnIndex));
+        values.put(DatabaseContract.ScoresTable.TIME_COL, cursor.getString(timeColumnIndex));
 
         return values;
     }
