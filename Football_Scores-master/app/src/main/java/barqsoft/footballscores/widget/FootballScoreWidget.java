@@ -5,14 +5,23 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import barqsoft.footballscores.Constants;
+import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 
 public class FootballScoreWidget extends AppWidgetProvider {
+    private static final String TAG = FootballScoreWidget.class.getSimpleName();
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         String homeTeamName = "Arsenal";
@@ -44,7 +53,15 @@ public class FootballScoreWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-            Log.i("shamim", "update event received !!!");
+            Log.i(TAG, "update event received ...");
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+            String dateStr = dateFormatter.format(new Date());
+            Uri searchUri = DatabaseContract.scores_table.buildScoreWithDate();
+
+            Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[] {dateStr}, null);
+            Log.i(TAG, "The count is : " + cursor.getCount());
+            cursor.close();
         }
     }
 }
