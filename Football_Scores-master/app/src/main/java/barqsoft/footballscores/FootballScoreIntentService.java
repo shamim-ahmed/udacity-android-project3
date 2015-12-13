@@ -15,6 +15,7 @@ import android.widget.RemoteViews;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
@@ -31,6 +32,11 @@ public class FootballScoreIntentService extends IntentService {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FootballScoreWidgetProvider.class));
         Context appContext = getApplicationContext();
+
+        if (appWidgetIds == null || appWidgetIds.length == 0) {
+            Log.i(TAG, "onHandleIntent called, but no widgets were updated");
+            return;
+        }
 
         for (int widgetId : appWidgetIds) {
             int layoutId = R.layout.widget_list_item;
@@ -49,12 +55,16 @@ public class FootballScoreIntentService extends IntentService {
     }
 
     private void updateView(Context context, RemoteViews views) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 
         String sortOrder = String.format("%s, %s", DatabaseContract.ScoresTable.DATE_COL, DatabaseContract.ScoresTable.TIME_COL);
         Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, sortOrder);
+
+        if (cursor == null) {
+            return;
+        }
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
