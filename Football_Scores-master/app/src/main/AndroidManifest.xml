@@ -45,7 +45,8 @@
                        android:resource="@xml/widget_info_football_scores"/>
         </receiver>
 
-        <service android:name=".FootballScoreIntentService"/>
+        <service android:name=".FootballScoreIntentService"
+                 android:exported="false"/>
     </application>
 
 </manifest>
