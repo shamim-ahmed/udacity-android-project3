@@ -1,56 +1,55 @@
 package barqsoft.footballscores;
 
+import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
-public class FootballScoreWidget extends AppWidgetProvider {
-    private static final String TAG = FootballScoreWidget.class.getSimpleName();
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private static final String INVALID_SCORE = "-1";
+public class FootballScoreIntentService extends IntentService {
+    private static final String TAG = FootballScoreIntentService.class.getSimpleName();
+
+    public FootballScoreIntentService() {
+        super(FootballScoreIntentService.class.getSimpleName());
+    }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(TAG, "onUpdate method called ...");
+    protected void onHandleIntent(Intent intent) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FootballScoreWidgetProvider.class));
+        Context appContext = getApplicationContext();
 
         for (int widgetId : appWidgetIds) {
             int layoutId = R.layout.widget_list_item;
-            RemoteViews views = new RemoteViews(context.getPackageName(), layoutId);
-            updateView(context, views);
+            RemoteViews views = new RemoteViews(getPackageName(), layoutId);
+            updateView(this, views);
 
-            Intent appIntent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, appIntent, 0);
+            // configure what happens when the widget is clicked
+            Intent appIntent = new Intent(appContext, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0, appIntent, 0);
             views.setOnClickPendingIntent(R.id.widget_root_layout, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, views);
         }
-    }
 
-    @Override
-    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        super.onReceive(context, intent);
-
-        if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-            Log.i(TAG, "onReceive method called ...");
-        }
+        Log.i(TAG, String.format("widgets with the following ids were updated: %s", Arrays.toString(appWidgetIds)));
     }
 
     private void updateView(Context context, RemoteViews views) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 
@@ -63,13 +62,13 @@ public class FootballScoreWidget extends AppWidgetProvider {
 
             String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
 
-            if (INVALID_SCORE.equals(homeGoals)) {
+            if (Constants.INVALID_SCORE.equals(homeGoals)) {
                 homeGoals = "";
             }
 
             String awayGoals = values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
 
-            if (INVALID_SCORE.equals(awayGoals)) {
+            if (Constants.INVALID_SCORE.equals(awayGoals)) {
                 awayGoals = "";
             }
 
