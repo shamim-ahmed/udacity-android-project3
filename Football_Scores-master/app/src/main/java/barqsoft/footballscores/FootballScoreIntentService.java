@@ -29,9 +29,9 @@ public class FootballScoreIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FootballScoreWidgetProvider.class));
         Context appContext = getApplicationContext();
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(appContext);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(appContext, FootballScoreWidgetProvider.class));
 
         if (appWidgetIds == null || appWidgetIds.length == 0) {
             Log.i(TAG, "onHandleIntent called, but no widgets were updated");
@@ -41,7 +41,7 @@ public class FootballScoreIntentService extends IntentService {
         for (int widgetId : appWidgetIds) {
             int layoutId = R.layout.widget_list_item;
             RemoteViews views = new RemoteViews(getPackageName(), layoutId);
-            updateView(this, views);
+            updateView(appContext, views);
 
             // configure what happens when the widget is clicked
             Intent appIntent = new Intent(appContext, MainActivity.class);
