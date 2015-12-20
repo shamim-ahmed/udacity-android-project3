@@ -63,12 +63,14 @@ public class FootballScoreIntentService extends IntentService {
         Cursor cursor = context.getContentResolver().query(searchUri, null, null, new String[]{dateStr}, sortOrder);
 
         if (cursor == null) {
+            Log.i(TAG, "No data found");
             return;
         }
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             ContentValues values = readCursor(cursor);
+            Log.i(TAG, "Retrieving data to be shown on the widget...");
 
             String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
 
