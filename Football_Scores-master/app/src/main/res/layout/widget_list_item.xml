@@ -20,14 +20,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/home_crest"
-                    android:src="@drawable/no_icon"/>
+                    android:src="@drawable/no_icon"
+                    android:contentDescription="@string/home_crest_description"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="@dimen/TeamNames"
                     android:gravity="center"
-                    android:text="@string/default_text_team_A"
+                    android:text="@string/default_text_home_team"
                     android:id="@+id/home_name"/>
         </LinearLayout>
         <LinearLayout
@@ -64,13 +65,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/away_crest"
-                    android:src="@drawable/no_icon"/>
+                    android:src="@drawable/no_icon"
+                    android:contentDescription="@string/away_crest_description"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/default_text_team_B"
+                    android:text="@string/default_text_away"
                     android:textSize="@dimen/TeamNames"
                     android:id="@+id/away_name"/>
         </LinearLayout>
