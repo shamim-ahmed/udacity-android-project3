@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -91,9 +92,13 @@ public class FootballScoreIntentService extends IntentService {
             views.setImageViewResource(R.id.home_crest, homeIconResourceId);
             views.setImageViewResource(R.id.away_crest, awayIconResourceId);
             views.setTextViewText(R.id.home_name, values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
+            views.setTextColor(R.id.home_name, Color.BLACK);
             views.setTextViewText(R.id.away_name, values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
+            views.setTextColor(R.id.away_name, Color.BLACK);
             views.setTextViewText(R.id.score_textview, scoreStr);
+            views.setTextColor(R.id.score_textview, Color.BLACK);
             views.setTextViewText(R.id.data_textview, values.getAsString(DatabaseContract.ScoresTable.TIME_COL));
+            views.setTextColor(R.id.data_textview, Color.BLACK);
         }
 
         cursor.close();
