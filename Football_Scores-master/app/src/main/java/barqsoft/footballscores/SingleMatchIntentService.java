@@ -39,7 +39,7 @@ public class SingleMatchIntentService extends IntentService {
         }
 
         for (int widgetId : appWidgetIds) {
-            int layoutId = R.layout.widget_list_item;
+            int layoutId = R.layout.widget_single_match;
             RemoteViews views = new RemoteViews(getPackageName(), layoutId);
             updateView(appContext, views);
 

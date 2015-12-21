@@ -43,7 +43,7 @@
                 <action android:name="barqsoft.footballscores.action.DATA_UPDATED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                       android:resource="@xml/widget_info_football_scores"/>
+                       android:resource="@xml/single_match_widget_info"/>
         </receiver>
 
         <service android:name=".SingleMatchIntentService"
