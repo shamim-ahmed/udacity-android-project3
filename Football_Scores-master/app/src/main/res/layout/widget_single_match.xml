@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="@string/default_text_away"
+                    android:text="@string/default_text_away_team"
                     android:textSize="@dimen/TeamNames"
                     android:id="@+id/away_name"
                     android:textColor="@color/black"/>

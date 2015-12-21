@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91418ceb-2c17-4ba8-8395-e9a23b4b0b69" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Football_Scores-master/.idea/runConfigurations.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Football_Scores-master/Football_Scores-master.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Football_Scores-master/app/app.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Football_Scores-master/app/src/main/java/barqsoft/footballscores/ScoresAdapter.java" afterPath="$PROJECT_DIR$/Football_Scores-master/app/src/main/java/barqsoft/footballscores/ScoresAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Football_Scores-master/.idea/misc.xml" afterPath="$PROJECT_DIR$/Football_Scores-master/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Football_Scores-master/.idea/modules.xml" afterPath="$PROJECT_DIR$/Football_Scores-master/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Football_Scores-master/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Football_Scores-master/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Football_Scores-master/.idea/vcs.xml" afterPath="$PROJECT_DIR$/Football_Scores-master/.idea/vcs.xml" />
-    </list>
+    <list default="true" id="91418ceb-2c17-4ba8-8395-e9a23b4b0b69" name="Default" comment="" />
     <ignored path="udacity-android-project3.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
