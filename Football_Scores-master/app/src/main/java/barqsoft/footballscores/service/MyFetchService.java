@@ -32,10 +32,10 @@ import barqsoft.footballscores.R;
  */
 public class MyFetchService extends IntentService
 {
-    public static final String LOG_TAG = "myFetchService";
+    public static final String LOG_TAG = MyFetchService.class.getSimpleName();
     public MyFetchService()
     {
-        super("myFetchService");
+        super(MyFetchService.class.getSimpleName());
     }
 
     @Override
@@ -93,7 +93,6 @@ public class MyFetchService extends IntentService
         catch (Exception e)
         {
             Log.e(LOG_TAG,"Exception here" + e.getMessage());
-            Log.e("shamim", "exception", e);
         }
         finally {
             if(m_connection != null)
@@ -141,15 +140,9 @@ public class MyFetchService extends IntentService
         // be updated. Feel free to use the codes
         final String BUNDESLIGA1 = "394";
         final String BUNDESLIGA2 = "395";
-        final String LIGUE1 = "396";
-        final String LIGUE2 = "397";
         final String PREMIER_LEAGUE = "398";
         final String PRIMERA_DIVISION = "399";
-        final String SEGUNDA_DIVISION = "400";
         final String SERIE_A = "401";
-        final String PRIMERA_LIGA = "402";
-        final String Bundesliga3 = "403";
-        final String EREDIVISIE = "404";
 
 
         final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
