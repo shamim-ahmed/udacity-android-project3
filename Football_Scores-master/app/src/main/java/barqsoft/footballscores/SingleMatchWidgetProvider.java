@@ -10,15 +10,15 @@ import android.util.Log;
 
 import barqsoft.footballscores.util.Constants;
 
-public class FootballScoreWidgetProvider extends AppWidgetProvider {
-    private static final String TAG = FootballScoreWidgetProvider.class.getSimpleName();
+public class SingleMatchWidgetProvider extends AppWidgetProvider {
+    private static final String TAG = SingleMatchWidgetProvider.class.getSimpleName();
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         Log.i(TAG, "onUpdate method called ...");
 
-        context.startService(new Intent(context, FootballScoreIntentService.class));
+        context.startService(new Intent(context, SingleMatchIntentService.class));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class FootballScoreWidgetProvider extends AppWidgetProvider {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
         Log.i(TAG, "onAppWidgetOptionsChanged method called ...");
 
-        context.startService(new Intent(context, FootballScoreIntentService.class));
+        context.startService(new Intent(context, SingleMatchIntentService.class));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FootballScoreWidgetProvider extends AppWidgetProvider {
 
         if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             Log.i(TAG, "onReceive method called ...");
-            context.startService(new Intent(context, FootballScoreIntentService.class));
+            context.startService(new Intent(context, SingleMatchIntentService.class));
         }
     }
 }

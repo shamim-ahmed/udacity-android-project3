@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">Football Scores</string>
+    <string name="widget_single_title">Football Scores : Single Match</string>
+    <string name="widget_list_title">Football Scores : Multiple Matches</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="test_text">Test</string>

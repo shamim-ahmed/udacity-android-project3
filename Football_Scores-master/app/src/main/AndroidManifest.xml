@@ -36,8 +36,8 @@
         </activity>
         <service android:name=".service.MyFetchService" />
 
-        <receiver android:name=".FootballScoreWidgetProvider"
-                  android:label="Football Score Widget">
+        <receiver android:name=".SingleMatchWidgetProvider"
+                  android:label="@string/widget_single_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="barqsoft.footballscores.action.DATA_UPDATED"/>
@@ -46,7 +46,7 @@
                        android:resource="@xml/widget_info_football_scores"/>
         </receiver>
 
-        <service android:name=".FootballScoreIntentService"
+        <service android:name=".SingleMatchIntentService"
                  android:exported="false"/>
     </application>
 

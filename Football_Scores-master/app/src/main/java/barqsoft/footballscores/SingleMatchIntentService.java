@@ -20,18 +20,18 @@ import java.util.Locale;
 import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
-public class FootballScoreIntentService extends IntentService {
-    private static final String TAG = FootballScoreIntentService.class.getSimpleName();
+public class SingleMatchIntentService extends IntentService {
+    private static final String TAG = SingleMatchIntentService.class.getSimpleName();
 
-    public FootballScoreIntentService() {
-        super(FootballScoreIntentService.class.getSimpleName());
+    public SingleMatchIntentService() {
+        super(SingleMatchIntentService.class.getSimpleName());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Context appContext = getApplicationContext();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(appContext);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(appContext, FootballScoreWidgetProvider.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(appContext, SingleMatchWidgetProvider.class));
 
         if (appWidgetIds == null || appWidgetIds.length == 0) {
             Log.i(TAG, "onHandleIntent called, but no widgets were updated");
