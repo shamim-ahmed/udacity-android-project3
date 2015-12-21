@@ -34,6 +34,8 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         Intent service_start = new Intent(getActivity(), MyFetchService.class);
         getActivity().startService(service_start);
     }
+
+    // the argument must be formatted as yyyy-MM-dd in US locale
     public void setFragmentDate(String date)
     {
         fragmentdate[0] = date;

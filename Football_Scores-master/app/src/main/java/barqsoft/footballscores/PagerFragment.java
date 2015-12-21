@@ -1,6 +1,9 @@
 package barqsoft.footballscores;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,14 +26,14 @@ public class PagerFragment extends Fragment
 {
     public static final int NUM_PAGES = 5;
     public ViewPager mPagerHandler;
-    private myPageAdapter mPagerAdapter;
+    private CustomPageAdapter mPagerAdapter;
     private MainScreenFragment[] viewFragments = new MainScreenFragment[5];
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
         mPagerHandler = (ViewPager) rootView.findViewById(R.id.pager);
-        mPagerAdapter = new myPageAdapter(getChildFragmentManager());
+        mPagerAdapter = new CustomPageAdapter(getChildFragmentManager());
         for (int i = 0;i < NUM_PAGES;i++)
         {
             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
@@ -42,12 +45,12 @@ public class PagerFragment extends Fragment
         mPagerHandler.setCurrentItem(MainActivity.current_fragment);
         return rootView;
     }
-    private class myPageAdapter extends FragmentStatePagerAdapter
+    private class CustomPageAdapter extends FragmentStatePagerAdapter
     {
         @Override
         public Fragment getItem(int i)
         {
-            return viewFragments[i];
+            return isRtl() ? viewFragments[NUM_PAGES - 1 - i] : viewFragments[i];
         }
 
         @Override
@@ -56,7 +59,7 @@ public class PagerFragment extends Fragment
             return NUM_PAGES;
         }
 
-        public myPageAdapter(FragmentManager fm)
+        public CustomPageAdapter(FragmentManager fm)
         {
             super(fm);
         }
@@ -64,7 +67,8 @@ public class PagerFragment extends Fragment
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return getDayName(getActivity(),System.currentTimeMillis()+((position-2)*86400000));
+            int i = isRtl() ? (NUM_PAGES - 1 - position) : position;
+            return getDayName(getActivity(),System.currentTimeMillis()+((i-2)*86400000));
         }
         public String getDayName(Context context, long dateInMillis) {
             // If the date is today, return the localized version of "Today" instead of the actual
@@ -88,9 +92,23 @@ public class PagerFragment extends Fragment
                 Time time = new Time();
                 time.setToNow();
                 // Otherwise, the format is just the day of the week (e.g "Wednesday".
-                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
+                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
                 return dayFormat.format(dateInMillis);
             }
         }
+    }
+
+    private boolean isRtl() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return false;
+        }
+
+        return isLayoutDirectionRtl();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private boolean isLayoutDirectionRtl() {
+        Configuration config = getResources().getConfiguration();
+        return config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 }
