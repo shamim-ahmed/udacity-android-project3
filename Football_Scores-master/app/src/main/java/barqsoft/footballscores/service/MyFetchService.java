@@ -116,7 +116,7 @@ public class MyFetchService extends IntentService
         try {
             if (JSON_data != null) {
                 //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
-                JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
+                JSONArray matches = new JSONObject(JSON_data).getJSONArray(resources.getString(R.string.json_field_fixtures));
                 if (matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
@@ -141,11 +141,13 @@ public class MyFetchService extends IntentService
         //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
         // be updated. Feel free to use the codes
-        final String BUNDESLIGA1 = "394";
-        final String BUNDESLIGA2 = "395";
-        final String PREMIER_LEAGUE = "398";
-        final String PRIMERA_DIVISION = "399";
-        final String SERIE_A = "401";
+        Resources resources = getResources();
+
+        final String BUNDESLIGA1 = resources.getString(R.string.league_code_bundesliga1);
+        final String BUNDESLIGA2 = resources.getString(R.string.league_code_bundesliga2);
+        final String PREMIER_LEAGUE = resources.getString(R.string.league_code_premier);
+        final String PRIMERA_DIVISION = resources.getString(R.string.league_code_primera);
+        final String SERIE_A = resources.getString(R.string.league_code_serie_a);
 
 
         final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
