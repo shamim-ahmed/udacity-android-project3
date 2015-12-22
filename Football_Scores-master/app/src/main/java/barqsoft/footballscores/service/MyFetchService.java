@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
@@ -41,17 +42,19 @@ public class MyFetchService extends IntentService
     @Override
     protected void onHandleIntent(Intent intent)
     {
-        getData("n2");
-        getData("p2");
+        Resources resources = getResources();
+        getData(resources.getString(R.string.timeframe_next_two));
+        getData(resources.getString(R.string.timeframe_previous_two));
 
         return;
     }
 
     private void getData (String timeFrame)
     {
+        Resources resources = getResources();
         //Creating fetch URL
-        final String BASE_URL = "http://api.football-data.org/alpha/fixtures"; //Base URL
-        final String QUERY_TIME_FRAME = "timeFrame"; //Time Frame parameter to determine days
+        final String BASE_URL = resources.getString(R.string.api_fixture_url); //Base URL
+        final String QUERY_TIME_FRAME = resources.getString(R.string.timeframe_query_param); //Time Frame parameter to determine days
         //final String QUERY_MATCH_DAY = "matchday";
 
         Uri fetch_build = Uri.parse(BASE_URL).buildUpon().
@@ -64,8 +67,8 @@ public class MyFetchService extends IntentService
         try {
             URL fetch = new URL(fetch_build.toString());
             m_connection = (HttpURLConnection) fetch.openConnection();
-            m_connection.setRequestMethod("GET");
-            m_connection.addRequestProperty("X-Auth-Token",getString(R.string.api_key));
+            m_connection.setRequestMethod(resources.getString(R.string.http_get_method));
+            m_connection.addRequestProperty(resources.getString(R.string.auth_token_header_name), getString(R.string.api_key));
             m_connection.connect();
 
             // Read the input stream into a String
@@ -82,7 +85,7 @@ public class MyFetchService extends IntentService
                 // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
                 // But it does make debugging a *lot* easier if you print out the completed
                 // buffer for debugging.
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
