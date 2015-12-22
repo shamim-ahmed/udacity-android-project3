@@ -7,7 +7,7 @@
               android:orientation="vertical">
 
     <FrameLayout
-            android:id="@+id/widget"
+            android:id="@+id/widget_multiple_match"
             android:layout_width="match_parent"
             android:layout_height="@dimen/abc_action_bar_default_height_material"
             android:background="@color/primary">
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                tools:listitem="@layout/widget_detail_list_item"/>
+                tools:listitem="@layout/widget_list_item"/>
         <TextView
                 android:id="@+id/widget_empty"
                 android:layout_width="match_parent"

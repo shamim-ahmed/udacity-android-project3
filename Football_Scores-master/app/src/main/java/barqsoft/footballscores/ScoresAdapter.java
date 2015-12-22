@@ -35,7 +35,7 @@ public class ScoresAdapter extends CursorAdapter
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        View mItem = LayoutInflater.from(context).inflate(R.layout.scores_list_item, parent, false);
+        View mItem = LayoutInflater.from(context).inflate(R.layout.widget_list_item, parent, false);
         ViewHolder mHolder = new ViewHolder(mItem);
         mItem.setTag(mHolder);
         //Log.v(FetchScoreTask.LOG_TAG,"new View inflated");

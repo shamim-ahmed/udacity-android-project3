@@ -69,50 +69,12 @@ public class SingleMatchIntentService extends IntentService {
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            ContentValues values = readCursor(cursor);
             Log.i(TAG, "Retrieving data to be shown on the widget...");
 
-            String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
-
-            if (Constants.INVALID_SCORE.equals(homeGoals)) {
-                homeGoals = "";
-            }
-
-            String awayGoals = values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
-
-            if (Constants.INVALID_SCORE.equals(awayGoals)) {
-                awayGoals = "";
-            }
-
-            String scoreStr = String.format("%s - %s", homeGoals, awayGoals);
-            int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
-            int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
-
-            views.setImageViewResource(R.id.home_crest, homeIconResourceId);
-            views.setImageViewResource(R.id.away_crest, awayIconResourceId);
-            views.setTextViewText(R.id.home_name, values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
-            views.setTextViewText(R.id.away_name, values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
-            views.setTextViewText(R.id.score_textview, scoreStr);
-            views.setTextViewText(R.id.data_textview, values.getAsString(DatabaseContract.ScoresTable.TIME_COL));
+            ContentValues values = Utilities.readCursor(cursor);
+            Utilities.populateView(values, views);
         }
 
         cursor.close();
-    }
-
-    private ContentValues readCursor(Cursor cursor) {
-        ContentValues values = new ContentValues();
-        int homeColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.HOME_COL);
-        int awayColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.AWAY_COL);
-        int homeGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.HOME_GOALS_COL);
-        int awayGoalsColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
-        int timeColumnIndex = cursor.getColumnIndex(DatabaseContract.ScoresTable.TIME_COL);
-
-        values.put(DatabaseContract.ScoresTable.HOME_COL, cursor.getString(homeColumnIndex));
-        values.put(DatabaseContract.ScoresTable.AWAY_COL, cursor.getString(awayColumnIndex));
-        values.put(DatabaseContract.ScoresTable.HOME_GOALS_COL, cursor.getString(homeGoalsColumnIndex));
-        values.put(DatabaseContract.ScoresTable.AWAY_GOALS_COL, cursor.getString(awayGoalsColumnIndex));
-        values.put(DatabaseContract.ScoresTable.TIME_COL, cursor.getString(timeColumnIndex));
-
-        return values;
     }
 }
