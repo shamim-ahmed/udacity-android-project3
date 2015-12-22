@@ -75,6 +75,10 @@ public class MultipleMatchIntentService extends RemoteViewsService {
                 ContentValues values = Utilities.readCursor(cursor);
                 Utilities.populateView(values, views);
 
+                final Intent fillInIntent = new Intent();
+                fillInIntent.putExtra("row_number", position);
+                views.setOnClickFillInIntent(R.id.list_item_root, fillInIntent);
+
                 return views;
             }
 
