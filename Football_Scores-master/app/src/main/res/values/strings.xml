@@ -37,11 +37,25 @@
     <string name="api_key" translatable="false">3c4d75bf88c1459c9c6bc79c8ebc1ccf</string>
     <string name="timeframe_next_two" translatable="false">n2</string>
     <string name="timeframe_previous_two" translatable="false">p2</string>
-    <string name="api_fixture_url" translatable="false">http://api.football-data.org/alpha/fixtures</string>
+    <string name="api_fixtures_base_url" translatable="false">http://api.football-data.org/alpha/fixtures/</string>
+    <string name="api_seasons_base_url" translatable="false">http://api.football-data.org/alpha/soccerseasons/</string>
     <string name="timeframe_query_param" translatable="false">timeFrame</string>
     <string name="http_get_method" translatable="false">GET</string>
     <string name="auth_token_header_name" translatable="false">X-Auth-Token</string>
+
     <string name="json_field_fixtures" translatable="false">fixtures</string>
+    <string name="json_field_links" translatable="false">_links</string>
+    <string name="json_field_soccer_season" translatable="false">soccerseason</string>
+    <string name="json_field_self" translatable="false">self</string>
+    <string name="json_field_match_date" translatable="false">date</string>
+    <string name="json_field_home_team_name" translatable="false">homeTeamName</string>
+    <string name="json_field_away_team_name" translatable="false">awayTeamName</string>
+    <string name="json_field_result" translatable="false">result</string>
+    <string name="json_field_home_goals" translatable="false">goalsHomeTeam</string>
+    <string name="json_field_away_goals" translatable="false">goalsAwayTeam</string>
+    <string name="json_field_match_day" translatable="false">matchday</string>
+    <string name="json_field_href" translatable="false">href</string>
+
     <string name="league_code_bundesliga1" translatable="false">394</string>
     <string name="league_code_bundesliga2" translatable="false">395</string>
     <string name="league_code_premier" translatable="false">398</string>
