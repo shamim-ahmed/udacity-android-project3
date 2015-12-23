@@ -1,6 +1,8 @@
 package barqsoft.footballscores.util;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.widget.RemoteViews;
@@ -18,38 +20,42 @@ public class Utilities {
     public static final int PRIMERA_DIVISION = 358;
     public static final int BUNDESLIGA = 351;
 
-    public static String getLeague(int league_num) {
+    public static String getLeague(int league_num, Context context) {
+        Resources resources = context.getResources();
+
         switch (league_num) {
             case SERIE_A:
-                return "Seria A";
+                return resources.getString(R.string.league_name_serie_a);
             case PREMIER_LEGAUE:
-                return "Premier League";
+                return resources.getString(R.string.league_name_premier);
             case CHAMPIONS_LEAGUE:
-                return "UEFA Champions League";
+                return resources.getString(R.string.league_name_uefa_champions);
             case PRIMERA_DIVISION:
-                return "Primera Division";
+                return resources.getString(R.string.league_name_primera_division);
             case BUNDESLIGA:
-                return "Bundesliga";
+                return resources.getString(R.string.league_name_bundesliga);
             default:
-                return "Not known League Please report";
+                return resources.getString(R.string.league_name_unknown);
         }
     }
 
-    public static String getMatchDay(int match_day, int league_num) {
+    public static String getMatchDay(int match_day, int league_num, Context context) {
+        Resources resources = context.getResources();
+
         if (league_num == CHAMPIONS_LEAGUE) {
             if (match_day <= 6) {
-                return "Group Stages, Matchday : 6";
+                return resources.getString(R.string.match_day_cl_group_stages);
             } else if (match_day == 7 || match_day == 8) {
-                return "First Knockout round";
+                return resources.getString(R.string.match_day_cl_first_knockout);
             } else if (match_day == 9 || match_day == 10) {
-                return "QuarterFinal";
+                return resources.getString(R.string.match_day_cl_quarter_final);
             } else if (match_day == 11 || match_day == 12) {
-                return "SemiFinal";
+                return resources.getString(R.string.match_day_cl_semi_final);
             } else {
-                return "Final";
+                return resources.getString(R.string.match_day_cl_final);
             }
         } else {
-            return "Matchday : " + String.valueOf(match_day);
+            return resources.getString(R.string.match_day_generic_prefix) + String.valueOf(match_day);
         }
     }
 
@@ -61,35 +67,54 @@ public class Utilities {
         }
     }
 
-    public static int getTeamCrestByTeamName(String teamname) {
+    public static int getTeamCrestByTeamName(String teamname, Context context) {
+        Resources resources = context.getResources();
+
         if (teamname == null) {
             return R.drawable.no_icon;
         }
-        switch (teamname) { //This is the set of icons that are currently in the app. Feel free to find and add more
-            //as you go.
-            case "Arsenal London FC":
-                return R.drawable.arsenal;
-            case "Manchester United FC":
-                return R.drawable.manchester_united;
-            case "Swansea City":
-                return R.drawable.swansea_city_afc;
-            case "Leicester City":
-                return R.drawable.leicester_city_fc_hd_logo;
-            case "Everton FC":
-                return R.drawable.everton_fc_logo1;
-            case "West Ham United FC":
-                return R.drawable.west_ham;
-            case "Tottenham Hotspur FC":
-                return R.drawable.tottenham_hotspur;
-            case "West Bromwich Albion":
-                return R.drawable.west_bromwich_albion_hd_logo;
-            case "Sunderland AFC":
-                return R.drawable.sunderland;
-            case "Stoke City FC":
-                return R.drawable.stoke_city;
-            default:
-                return R.drawable.no_icon;
+
+        if (teamname.equals(resources.getString(R.string.team_name_arsenal))) {
+            return R.drawable.arsenal;
         }
+
+        if (teamname.equals(resources.getString(R.string.team_name_manchester))) {
+            return R.drawable.manchester_united;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_swansea))) {
+            return R.drawable.swansea_city_afc;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_leicester))) {
+            return R.drawable.leicester_city_fc_hd_logo;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_everton))) {
+            return R.drawable.everton_fc_logo1;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_west_ham_united))) {
+            return R.drawable.west_ham;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_tottenham))) {
+            return R.drawable.tottenham_hotspur;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_west_bromwich))) {
+            return R.drawable.west_bromwich_albion_hd_logo;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_sutherland))) {
+            return R.drawable.sunderland;
+        }
+
+        if (teamname.equals(resources.getString(R.string.team_name_stoke_city))) {
+            return R.drawable.stoke_city;
+        }
+
+        return R.drawable.no_icon;
     }
 
     public static ContentValues readCursor(Cursor cursor) {
@@ -109,7 +134,7 @@ public class Utilities {
         return values;
     }
 
-    public static void populateView(ContentValues values, RemoteViews views) {
+    public static void populateView(ContentValues values, RemoteViews views, Context context) {
         String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
 
         if (Constants.INVALID_SCORE.equals(homeGoals)) {
@@ -123,8 +148,8 @@ public class Utilities {
         }
 
         String scoreStr = String.format("%s - %s", homeGoals, awayGoals);
-        int homeIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.HOME_COL));
-        int awayIconResourceId = Utilities.getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.AWAY_COL));
+        int homeIconResourceId = getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.HOME_COL), context);
+        int awayIconResourceId = getTeamCrestByTeamName(values.getAsString(DatabaseContract.ScoresTable.AWAY_COL), context);
 
         views.setImageViewResource(R.id.home_crest, homeIconResourceId);
         views.setImageViewResource(R.id.away_crest, awayIconResourceId);

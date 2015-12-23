@@ -72,7 +72,7 @@ public class SingleMatchIntentService extends IntentService {
             Log.i(TAG, "Retrieving data to be shown on the widget...");
 
             ContentValues values = Utilities.readCursor(cursor);
-            Utilities.populateView(values, views);
+            Utilities.populateView(values, views, context);
         }
 
         cursor.close();

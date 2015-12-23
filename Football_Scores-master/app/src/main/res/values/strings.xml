@@ -33,6 +33,34 @@
     <string name="home_crest_description">Home Team Crest</string>
     <string name="away_crest_description">Away Team Crest</string>
 
+    <!-- league names -->
+    <string name="league_name_serie_a">Seria A</string>
+    <string name="league_name_premier">Premier League</string>
+    <string name="league_name_uefa_champions">UEFA Champions League</string>
+    <string name="league_name_primera_division">Primera Division</string>
+    <string name="league_name_bundesliga">Bundesliga</string>
+    <string name="league_name_unknown">Not known League Please report</string>
+
+    <!-- match day strings -->
+    <string name="match_day_cl_group_stages">Group Stages, Matchday : 6</string>
+    <string name="match_day_cl_first_knockout">First Knockout round</string>
+    <string name="match_day_cl_quarter_final">QuarterFinal</string>
+    <string name="match_day_cl_semi_final">SemiFinal</string>
+    <string name="match_day_cl_final">Final</string>
+    <string name="match_day_generic_prefix">Matchday : </string>
+
+    <!-- team names -->
+    <string name="team_name_arsenal">Arsenal London FC</string>
+    <string name="team_name_manchester">Manchester United FC</string>
+    <string name="team_name_swansea">Swansea City</string>
+    <string name="team_name_leicester">Leicester City</string>
+    <string name="team_name_everton">Everton FC</string>
+    <string name="team_name_west_ham_united">West Ham United FC</string>
+    <string name="team_name_tottenham">Tottenham Hotspur FC</string>
+    <string name="team_name_west_bromwich">West Bromwich Albion</string>
+    <string name="team_name_sutherland">Sunderland AFC</string>
+    <string name="team_name_stoke_city">Stoke City FC</string>
+
     <!-- non translatable strings -->
     <string name="api_key" translatable="false">3c4d75bf88c1459c9c6bc79c8ebc1ccf</string>
     <string name="timeframe_next_two" translatable="false">n2</string>
