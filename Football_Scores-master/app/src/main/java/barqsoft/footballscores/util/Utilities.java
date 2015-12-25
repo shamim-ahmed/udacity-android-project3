@@ -2,7 +2,6 @@ package barqsoft.footballscores.util;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.widget.RemoteViews;

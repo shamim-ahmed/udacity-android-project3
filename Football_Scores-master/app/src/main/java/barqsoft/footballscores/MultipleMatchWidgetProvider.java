@@ -12,8 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
-import barqsoft.footballscores.util.Constants;
-
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MultipleMatchWidgetProvider extends AppWidgetProvider {
     @Override
