@@ -2,7 +2,6 @@ package barqsoft.footballscores;
 
 import android.annotation.TargetApi;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -37,8 +36,6 @@ public class MultipleMatchIntentService extends RemoteViewsService {
                 }
 
                 final long identityToken = Binder.clearCallingIdentity();
-
-                Context context = getApplicationContext();
 
                 // initialize the new cursor
                 SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
