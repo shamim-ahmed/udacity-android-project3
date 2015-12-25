@@ -6,7 +6,7 @@
                     android:minHeight="@dimen/widget_single_match_default_height"
                     android:minResizeWidth="@dimen/widget_single_match_min_resize_width"
                     android:minResizeHeight="@dimen/widget_single_match_min_resize_height"
-                    android:previewImage="@drawable/widget_preview"
+                    android:previewImage="@drawable/widget_preview_single_match"
                     android:updatePeriodMillis="1800000">
 
 </appwidget-provider>
