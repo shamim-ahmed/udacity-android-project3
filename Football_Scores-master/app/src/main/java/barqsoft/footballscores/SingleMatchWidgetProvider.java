@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import barqsoft.footballscores.util.Constants;
-
 public class SingleMatchWidgetProvider extends AppWidgetProvider {
     private static final String TAG = SingleMatchWidgetProvider.class.getSimpleName();
 
@@ -34,7 +32,9 @@ public class SingleMatchWidgetProvider extends AppWidgetProvider {
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
 
-        if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        String actionDataUpdated = context.getString(R.string.action_data_updated);
+
+        if (actionDataUpdated.equals(intent.getAction())) {
             Log.i(TAG, "onReceive method called ...");
             context.startService(new Intent(context, SingleMatchIntentService.class));
         }

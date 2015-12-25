@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
@@ -42,19 +41,17 @@ public class MyFetchService extends IntentService
     @Override
     protected void onHandleIntent(Intent intent)
     {
-        Resources resources = getResources();
-        getData(resources.getString(R.string.timeframe_next_two));
-        getData(resources.getString(R.string.timeframe_previous_two));
+        getData(getString(R.string.timeframe_next_two));
+        getData(getString(R.string.timeframe_previous_two));
 
         return;
     }
 
     private void getData (String timeFrame)
     {
-        Resources resources = getResources();
         //Creating fetch URL
-        final String BASE_URL = resources.getString(R.string.api_fixtures_base_url); //Base URL
-        final String QUERY_TIME_FRAME = resources.getString(R.string.timeframe_query_param); //Time Frame parameter to determine days
+        final String BASE_URL = getString(R.string.api_fixtures_base_url); //Base URL
+        final String QUERY_TIME_FRAME = getString(R.string.timeframe_query_param); //Time Frame parameter to determine days
         //final String QUERY_MATCH_DAY = "matchday";
 
         Uri fetch_build = Uri.parse(BASE_URL).buildUpon().
@@ -67,13 +64,13 @@ public class MyFetchService extends IntentService
         try {
             URL fetch = new URL(fetch_build.toString());
             m_connection = (HttpURLConnection) fetch.openConnection();
-            m_connection.setRequestMethod(resources.getString(R.string.http_get_method));
-            m_connection.addRequestProperty(resources.getString(R.string.auth_token_header_name), getString(R.string.api_key));
+            m_connection.setRequestMethod(getString(R.string.http_get_method));
+            m_connection.addRequestProperty(getString(R.string.auth_token_header_name), getString(R.string.api_key));
             m_connection.connect();
 
             // Read the input stream into a String
             InputStream inputStream = m_connection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 // Nothing to do.
                 return;
@@ -116,7 +113,7 @@ public class MyFetchService extends IntentService
         try {
             if (JSON_data != null) {
                 //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
-                JSONArray matches = new JSONObject(JSON_data).getJSONArray(resources.getString(R.string.json_field_fixtures));
+                JSONArray matches = new JSONObject(JSON_data).getJSONArray(getString(R.string.json_field_fixtures));
                 if (matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
@@ -136,32 +133,31 @@ public class MyFetchService extends IntentService
             Log.e(LOG_TAG,e.getMessage());
         }
     }
-    private void processJSONdata (String JSONdata,Context mContext, boolean isReal)
+    private void processJSONdata (String JSONdata,Context context, boolean isReal)
     {
         //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
         // be updated. Feel free to use the codes
-        Resources resources = getResources();
 
-        final String BUNDESLIGA1 = resources.getString(R.string.league_code_bundesliga1);
-        final String BUNDESLIGA2 = resources.getString(R.string.league_code_bundesliga2);
-        final String PREMIER_LEAGUE = resources.getString(R.string.league_code_premier);
-        final String PRIMERA_DIVISION = resources.getString(R.string.league_code_primera);
-        final String SERIE_A = resources.getString(R.string.league_code_serie_a);
+        final String BUNDESLIGA1 = getString(R.string.league_code_bundesliga1);
+        final String BUNDESLIGA2 = getString(R.string.league_code_bundesliga2);
+        final String PREMIER_LEAGUE = getString(R.string.league_code_premier);
+        final String PRIMERA_DIVISION = getString(R.string.league_code_primera);
+        final String SERIE_A = getString(R.string.league_code_serie_a);
 
-        final String SEASON_LINK = resources.getString(R.string.api_seasons_base_url);
-        final String MATCH_LINK = resources.getString(R.string.api_fixtures_base_url);
-        final String FIXTURES = resources.getString(R.string.json_field_fixtures);
-        final String LINKS = resources.getString(R.string.json_field_links);
-        final String SOCCER_SEASON = resources.getString(R.string.json_field_soccer_season);
-        final String SELF = resources.getString(R.string.json_field_self);
-        final String MATCH_DATE = resources.getString(R.string.json_field_match_date);
-        final String HOME_TEAM = resources.getString(R.string.json_field_home_team_name);
-        final String AWAY_TEAM = resources.getString(R.string.json_field_away_team_name);
-        final String RESULT = resources.getString(R.string.json_field_result);
-        final String HOME_GOALS = resources.getString(R.string.json_field_home_goals);
-        final String AWAY_GOALS = resources.getString(R.string.json_field_away_goals);
-        final String MATCH_DAY = resources.getString(R.string.json_field_match_day);
+        final String SEASON_LINK = getString(R.string.api_seasons_base_url);
+        final String MATCH_LINK = getString(R.string.api_fixtures_base_url);
+        final String FIXTURES = getString(R.string.json_field_fixtures);
+        final String LINKS = getString(R.string.json_field_links);
+        final String SOCCER_SEASON = getString(R.string.json_field_soccer_season);
+        final String SELF = getString(R.string.json_field_self);
+        final String MATCH_DATE = getString(R.string.json_field_match_date);
+        final String HOME_TEAM = getString(R.string.json_field_home_team_name);
+        final String AWAY_TEAM = getString(R.string.json_field_away_team_name);
+        final String RESULT = getString(R.string.json_field_result);
+        final String HOME_GOALS = getString(R.string.json_field_home_goals);
+        final String AWAY_GOALS = getString(R.string.json_field_away_goals);
+        final String MATCH_DAY = getString(R.string.json_field_match_day);
 
         //Match data
         String League = null;
@@ -186,8 +182,8 @@ public class MyFetchService extends IntentService
 
                 JSONObject match_data = matches.getJSONObject(i);
                 League = match_data.getJSONObject(LINKS).getJSONObject(SOCCER_SEASON).
-                        getString("href");
-                League = League.replace(SEASON_LINK,"");
+                        getString(getString(R.string.href_attribute_name));
+                League = League.replace(SEASON_LINK, "");
                 //This if statement controls which leagues we're interested in the data from.
                 //add leagues here in order to have them be added to the DB.
                 // If you are finding no data in the app, check that this contains all the leagues.
@@ -199,7 +195,7 @@ public class MyFetchService extends IntentService
                         League.equals(PRIMERA_DIVISION)     )
                 {
                     match_id = match_data.getJSONObject(LINKS).getJSONObject(SELF).
-                            getString(resources.getString(R.string.json_field_href));
+                            getString(getString(R.string.href_attribute_name));
                     match_id = match_id.replace(MATCH_LINK, "");
                     if(!isReal){
                         //This if statement changes the match ID of the dummy data so that it all goes into the database
@@ -211,11 +207,11 @@ public class MyFetchService extends IntentService
                     mDate = mDate.substring(0,mDate.indexOf("T"));
                     // Fixed a bug: the locale must be specified here, otherwise the app will
                     // crash under a different locale
-                    SimpleDateFormat match_date = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.US);
-                    match_date.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    SimpleDateFormat match_date = new SimpleDateFormat(getString(R.string.date_format_long_1), Locale.US);
+                    match_date.setTimeZone(TimeZone.getTimeZone(getString(R.string.time_zone)));
                     try {
                         Date parseddate = match_date.parse(mDate+mTime);
-                        SimpleDateFormat new_date = new SimpleDateFormat("yyyy-MM-dd:HH:mm", Locale.US);
+                        SimpleDateFormat new_date = new SimpleDateFormat(getString(R.string.date_format_long_2), Locale.US);
                         new_date.setTimeZone(TimeZone.getDefault());
                         mDate = new_date.format(parseddate);
                         mTime = mDate.substring(mDate.indexOf(":") + 1);
@@ -223,8 +219,8 @@ public class MyFetchService extends IntentService
 
                         if(!isReal){
                             //This if statement changes the dummy data's date to match our current date range.
-                            Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
-                            SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                            Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*Constants.NUMBER_OF_MILLISECONDS_IN_DAY));
+                            SimpleDateFormat mformat = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
                             mDate=mformat.format(fragmentdate);
                         }
                     }
@@ -264,12 +260,12 @@ public class MyFetchService extends IntentService
             int inserted_data = 0;
             ContentValues[] insert_data = new ContentValues[values.size()];
             values.toArray(insert_data);
-            inserted_data = mContext.getContentResolver().bulkInsert(
+            inserted_data = context.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
 
             // broadcast the database change for the widgets
-            Context context = getApplicationContext();
-            Intent dataUpdatedIntent = new Intent(Constants.ACTION_DATA_UPDATED).setPackage(context.getPackageName());
+            final String actionDataUpdated = getString(R.string.action_data_updated);
+            Intent dataUpdatedIntent = new Intent(actionDataUpdated).setPackage(getPackageName());
             context.sendBroadcast(dataUpdatedIntent);
 
             Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));

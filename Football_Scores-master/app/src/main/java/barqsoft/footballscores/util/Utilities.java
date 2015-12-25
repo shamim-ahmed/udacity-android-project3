@@ -21,41 +21,37 @@ public class Utilities {
     public static final int BUNDESLIGA = 351;
 
     public static String getLeague(int league_num, Context context) {
-        Resources resources = context.getResources();
-
         switch (league_num) {
             case SERIE_A:
-                return resources.getString(R.string.league_name_serie_a);
+                return context.getString(R.string.league_name_serie_a);
             case PREMIER_LEGAUE:
-                return resources.getString(R.string.league_name_premier);
+                return context.getString(R.string.league_name_premier);
             case CHAMPIONS_LEAGUE:
-                return resources.getString(R.string.league_name_uefa_champions);
+                return context.getString(R.string.league_name_uefa_champions);
             case PRIMERA_DIVISION:
-                return resources.getString(R.string.league_name_primera_division);
+                return context.getString(R.string.league_name_primera_division);
             case BUNDESLIGA:
-                return resources.getString(R.string.league_name_bundesliga);
+                return context.getString(R.string.league_name_bundesliga);
             default:
-                return resources.getString(R.string.league_name_unknown);
+                return context.getString(R.string.league_name_unknown);
         }
     }
 
     public static String getMatchDay(int match_day, int league_num, Context context) {
-        Resources resources = context.getResources();
-
         if (league_num == CHAMPIONS_LEAGUE) {
             if (match_day <= 6) {
-                return resources.getString(R.string.match_day_cl_group_stages);
+                return context.getString(R.string.match_day_cl_group_stages);
             } else if (match_day == 7 || match_day == 8) {
-                return resources.getString(R.string.match_day_cl_first_knockout);
+                return context.getString(R.string.match_day_cl_first_knockout);
             } else if (match_day == 9 || match_day == 10) {
-                return resources.getString(R.string.match_day_cl_quarter_final);
+                return context.getString(R.string.match_day_cl_quarter_final);
             } else if (match_day == 11 || match_day == 12) {
-                return resources.getString(R.string.match_day_cl_semi_final);
+                return context.getString(R.string.match_day_cl_semi_final);
             } else {
-                return resources.getString(R.string.match_day_cl_final);
+                return context.getString(R.string.match_day_cl_final);
             }
         } else {
-            return resources.getString(R.string.match_day_generic_prefix) + String.valueOf(match_day);
+            return context.getString(R.string.match_day_generic_prefix) + String.valueOf(match_day);
         }
     }
 
@@ -68,49 +64,47 @@ public class Utilities {
     }
 
     public static int getTeamCrestByTeamName(String teamname, Context context) {
-        Resources resources = context.getResources();
-
         if (teamname == null) {
             return R.drawable.no_icon;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_arsenal))) {
+        if (teamname.equals(context.getString(R.string.team_name_arsenal))) {
             return R.drawable.arsenal;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_manchester))) {
+        if (teamname.equals(context.getString(R.string.team_name_manchester))) {
             return R.drawable.manchester_united;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_swansea))) {
+        if (teamname.equals(context.getString(R.string.team_name_swansea))) {
             return R.drawable.swansea_city_afc;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_leicester))) {
+        if (teamname.equals(context.getString(R.string.team_name_leicester))) {
             return R.drawable.leicester_city_fc_hd_logo;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_everton))) {
+        if (teamname.equals(context.getString(R.string.team_name_everton))) {
             return R.drawable.everton_fc_logo1;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_west_ham_united))) {
+        if (teamname.equals(context.getString(R.string.team_name_west_ham_united))) {
             return R.drawable.west_ham;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_tottenham))) {
+        if (teamname.equals(context.getString(R.string.team_name_tottenham))) {
             return R.drawable.tottenham_hotspur;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_west_bromwich))) {
+        if (teamname.equals(context.getString(R.string.team_name_west_bromwich))) {
             return R.drawable.west_bromwich_albion_hd_logo;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_sutherland))) {
+        if (teamname.equals(context.getString(R.string.team_name_sutherland))) {
             return R.drawable.sunderland;
         }
 
-        if (teamname.equals(resources.getString(R.string.team_name_stoke_city))) {
+        if (teamname.equals(context.getString(R.string.team_name_stoke_city))) {
             return R.drawable.stoke_city;
         }
 
@@ -136,14 +130,15 @@ public class Utilities {
 
     public static void populateView(ContentValues values, RemoteViews views, Context context) {
         String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
+        String invalidScore = context.getString(R.string.invalid_score);
 
-        if (Constants.INVALID_SCORE.equals(homeGoals)) {
+        if (invalidScore.equals(homeGoals)) {
             homeGoals = "";
         }
 
         String awayGoals = values.getAsString(DatabaseContract.ScoresTable.AWAY_GOALS_COL);
 
-        if (Constants.INVALID_SCORE.equals(awayGoals)) {
+        if (invalidScore.equals(awayGoals)) {
             awayGoals = "";
         }
 

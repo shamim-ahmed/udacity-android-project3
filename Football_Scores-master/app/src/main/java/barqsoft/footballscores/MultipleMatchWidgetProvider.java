@@ -46,7 +46,9 @@ public class MultipleMatchWidgetProvider extends AppWidgetProvider {
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
 
-        if (Constants.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        String actionDataUpdated = context.getString(R.string.action_data_updated);
+
+        if (actionDataUpdated.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);

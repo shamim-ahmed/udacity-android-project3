@@ -13,6 +13,10 @@ public class MainActivity extends ActionBarActivity
     public static int current_fragment = 2;
     public static String LOG_TAG = "MainActivity";
     private final String save_tag = "Save Test";
+    private static final String PAGER_CURRENT = "Pager_Current";
+    private static final String SELECTED_MATCH = "Selected_match";
+    private static final String FRAGMENT_KEY = "my_main";
+
     private PagerFragment my_main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,9 @@ public class MainActivity extends ActionBarActivity
         Log.v(save_tag,"will save");
         Log.v(save_tag,"fragment: "+String.valueOf(my_main.mPagerHandler.getCurrentItem()));
         Log.v(save_tag,"selected id: "+selected_match_id);
-        outState.putInt("Pager_Current",my_main.mPagerHandler.getCurrentItem());
-        outState.putInt("Selected_match",selected_match_id);
-        getSupportFragmentManager().putFragment(outState,"my_main",my_main);
+        outState.putInt(PAGER_CURRENT, my_main.mPagerHandler.getCurrentItem());
+        outState.putInt(SELECTED_MATCH,selected_match_id);
+        getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, my_main);
         super.onSaveInstanceState(outState);
     }
 
@@ -71,9 +75,9 @@ public class MainActivity extends ActionBarActivity
         Log.v(save_tag,"will retrive");
         Log.v(save_tag,"fragment: "+String.valueOf(savedInstanceState.getInt("Pager_Current")));
         Log.v(save_tag,"selected id: "+savedInstanceState.getInt("Selected_match"));
-        current_fragment = savedInstanceState.getInt("Pager_Current");
-        selected_match_id = savedInstanceState.getInt("Selected_match");
-        my_main = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState,"my_main");
+        current_fragment = savedInstanceState.getInt(PAGER_CURRENT);
+        selected_match_id = savedInstanceState.getInt(SELECTED_MATCH);
+        my_main = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

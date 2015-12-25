@@ -55,7 +55,7 @@ public class SingleMatchIntentService extends IntentService {
     }
 
     private void updateView(Context context, RemoteViews views) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 

@@ -1,7 +1,6 @@
 package barqsoft.footballscores;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -40,8 +38,10 @@ public class MultipleMatchIntentService extends RemoteViewsService {
 
                 final long identityToken = Binder.clearCallingIdentity();
 
+                Context context = getApplicationContext();
+
                 // initialize the new cursor
-                SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
                 String dateStr = dateFormatter.format(new Date());
                 Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 
@@ -76,7 +76,6 @@ public class MultipleMatchIntentService extends RemoteViewsService {
                 Utilities.populateView(values, views, getApplicationContext());
 
                 final Intent fillInIntent = new Intent();
-                fillInIntent.putExtra("row_number", position);
                 views.setOnClickFillInIntent(R.id.list_item_root, fillInIntent);
 
                 return views;
