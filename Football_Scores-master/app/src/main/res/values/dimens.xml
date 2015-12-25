@@ -10,13 +10,13 @@
 
     <!--dimensions for single match widget -->
     <dimen name="widget_single_match_default_width">250dp</dimen>
-    <dimen name="widget_single_match_default_height">40dp</dimen>
+    <dimen name="widget_single_match_default_height">110dp</dimen>
     <dimen name="widget_single_match_min_resize_width">40dp</dimen>
     <dimen name="widget_single_match_min_resize_height">40dp</dimen>
 
     <!--dimensions for match list widget -->
     <dimen name="widget_multiple_match_default_width">250dp</dimen>
-    <dimen name="widget_multiple_match_default_height">110dp</dimen>
+    <dimen name="widget_multiple_match_default_height">180dp</dimen>
     <dimen name="widget_multiple_match_min_resize_width">40dp</dimen>
     <dimen name="widget_multiple_match_min_resize_height">40dp</dimen>
 
