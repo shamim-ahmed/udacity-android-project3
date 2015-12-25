@@ -16,7 +16,10 @@
 
     <!--dimensions for match list widget -->
     <dimen name="widget_multiple_match_default_width">250dp</dimen>
-    <dimen name="widget_multiple_match_default_height">320dp</dimen>
+    <dimen name="widget_multiple_match_default_height">110dp</dimen>
     <dimen name="widget_multiple_match_min_resize_width">40dp</dimen>
     <dimen name="widget_multiple_match_min_resize_height">40dp</dimen>
+
+    <!--widget header height -->
+    <dimen name="widget_header_height">36dp</dimen>
 </resources>
