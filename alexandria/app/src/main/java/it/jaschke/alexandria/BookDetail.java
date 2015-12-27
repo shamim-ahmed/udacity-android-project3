@@ -31,9 +31,6 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
     private String ean;
     private ShareActionProvider shareActionProvider;
 
-    private final String deleteBookAction = getString(R.string.action_delete_book);
-    private final String eanExtraKey = getString(R.string.ean_extra_key);
-
     public BookDetail(){
     }
 
@@ -46,11 +43,9 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final String eanKey = getString(R.string.ean_key);
-
         Bundle arguments = getArguments();
         if (arguments != null) {
-            ean = arguments.getString(eanKey);
+            ean = arguments.getString(Constants.SELECTED_BOOK_EAN);
             getLoaderManager().restartLoader(Constants.LOADER_ID, null, this);
         }
 
@@ -59,8 +54,8 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
             @Override
             public void onClick(View view) {
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(eanExtraKey, ean);
-                bookIntent.setAction(deleteBookAction);
+                bookIntent.putExtra(BookService.EAN, ean);
+                bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 getActivity().getSupportFragmentManager().popBackStack();
             }

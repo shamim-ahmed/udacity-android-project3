@@ -33,9 +33,10 @@ public class BookService extends IntentService {
 
     private final String LOG_TAG = BookService.class.getSimpleName();
 
-    private final String fetchBookAction = getString(R.string.action_fetch_book);
-    private final String deleteBookAction = getString(R.string.action_delete_book);
-    private final String eanExtraKey = getString(R.string.ean_extra_key);
+    public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
+    public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
+
+    public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
 
     public BookService() {
         super(Constants.APP_NAME);
@@ -45,11 +46,11 @@ public class BookService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (fetchBookAction.equals(action)) {
-                final String ean = intent.getStringExtra(eanExtraKey);
+            if (FETCH_BOOK.equals(action)) {
+                final String ean = intent.getStringExtra(EAN);
                 fetchBook(ean);
-            } else if (deleteBookAction.equals(action)) {
-                final String ean = intent.getStringExtra(eanExtraKey);
+            } else if (DELETE_BOOK.equals(action)) {
+                final String ean = intent.getStringExtra(EAN);
                 deleteBook(ean);
             }
         }

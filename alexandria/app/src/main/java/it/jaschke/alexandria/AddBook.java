@@ -36,10 +36,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final int LOADER_ID = 1;
     private View rootView;
 
-    private final String eanContent = getString(R.string.ean_content);
-    private final String fetchBookAction = getString(R.string.action_fetch_book);
-    private final String deleteBookAction = getString(R.string.action_delete_book);
-    private final String eanExtraKey = getString(R.string.ean_extra_key);
+    private final String EAN_CONTENT = "eanContent";
+
 
     public AddBook(){
     }
@@ -51,7 +49,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             String isbn = ean.getText().toString();
 
             if (!StringUtils.isBlank(isbn)) {
-                outState.putString(eanContent, isbn);
+                outState.putString(EAN_CONTENT, isbn);
                 Log.i(LOG_TAG, String.format("saved the isbn %s", isbn));
             }
         }
@@ -65,7 +63,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         ean = (EditText) rootView.findViewById(R.id.ean);
 
         if (savedInstanceState != null) {
-            String isbn = savedInstanceState.getString(eanContent, null);
+            String isbn = savedInstanceState.getString(EAN_CONTENT, null);
 
             if (!StringUtils.isBlank(isbn)) {
                 ean.setText(isbn);
@@ -107,8 +105,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
                 //Once we have an ISBN, start a book intent
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(eanExtraKey, ean);
-                bookIntent.setAction(fetchBookAction);
+                bookIntent.putExtra(BookService.EAN, ean);
+                bookIntent.setAction(BookService.FETCH_BOOK);
                 getActivity().startService(bookIntent);
                 AddBook.this.restartLoader();
             }
@@ -136,15 +134,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void onClick(View view) {
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(eanExtraKey, ean.getText().toString());
-                bookIntent.setAction(deleteBookAction);
+                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
+                bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 ean.setText(Constants.EMPTY_STRING);
             }
         });
 
         if(savedInstanceState!=null){
-            ean.setText(savedInstanceState.getString(eanContent));
+            ean.setText(savedInstanceState.getString(EAN_CONTENT));
             ean.setHint(Constants.EMPTY_STRING);
         }
 
