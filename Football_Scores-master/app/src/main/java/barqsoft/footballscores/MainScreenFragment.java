@@ -52,6 +52,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
         Intent intent = getActivity().getIntent();
         int positionToSelect = intent.getIntExtra(Constants.SELECTED_INDEX_ATTRIBUTE, Constants.INVALID_SELECTED_INDEX);
+        intent.removeExtra(Constants.SELECTED_INDEX_ATTRIBUTE);
         Log.i(TAG, String.format("The position to select (as specified by the widget) is: %d", positionToSelect));
 
         mAdapter = new ScoresAdapter(getActivity(),null,0, positionToSelect);
