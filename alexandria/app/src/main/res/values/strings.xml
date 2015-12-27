@@ -46,6 +46,8 @@
     <string name="message_event" translatable="false">MESSAGE_EVENT</string>
     <string name="message_extra_key" translatable="false">MESSAGE_EXTRA</string>
     <string name="scanned_barcode_key" translatable="false">scanned_barcode</string>
+    <string name="selected_navigation_drawer_position" translatable="false">selected_navigation_drawer_position</string>
+    <string name="navigation_drawer_learned" translatable="false">navigation_drawer_learned</string>
 
     <!-- json fields -->
     <string name="json_field_items" translatable="false">items</string>
