@@ -31,7 +31,6 @@ public class ScoresAdapter extends CursorAdapter
     public static final int COL_AWAY = 4;
     public static final int COL_HOME_GOALS = 6;
     public static final int COL_AWAY_GOALS = 7;
-    public static final int COL_DATE = 1;
     public static final int COL_LEAGUE = 5;
     public static final int COL_MATCHDAY = 9;
     public static final int COL_ID = 8;
@@ -111,7 +110,7 @@ public class ScoresAdapter extends CursorAdapter
         View item = super.getView(position, convertView, parent);
         item.clearFocus();
 
-        if (positionToSelect != Constants.INVALID_SELECTED_INDEX && position == positionToSelect && !itemSelected) {
+        if (positionToSelect != ListView.INVALID_POSITION && position == positionToSelect && !itemSelected) {
             if (parent instanceof  ListView) {
                 Log.i(TAG, String.format("selecting position: %d", positionToSelect));
                 ((ListView) parent).performItemClick(item, position, item.getId());

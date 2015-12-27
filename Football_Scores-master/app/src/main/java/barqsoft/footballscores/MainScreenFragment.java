@@ -27,6 +27,8 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     public ScoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
+    private ListView scoreList;
+    private int positionToSelect = ListView.INVALID_POSITION;
 
     public MainScreenFragment()
     {
@@ -48,22 +50,20 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                              final Bundle savedInstanceState) {
         update_scores();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
+        scoreList = (ListView) rootView.findViewById(R.id.scores_list);
 
         Intent intent = getActivity().getIntent();
-        int positionToSelect = intent.getIntExtra(Constants.SELECTED_INDEX_ATTRIBUTE, Constants.INVALID_SELECTED_INDEX);
+        positionToSelect = intent.getIntExtra(Constants.SELECTED_INDEX_ATTRIBUTE, ListView.INVALID_POSITION);
         intent.removeExtra(Constants.SELECTED_INDEX_ATTRIBUTE);
         Log.i(TAG, String.format("The position to select (as specified by the widget) is: %d", positionToSelect));
 
         mAdapter = new ScoresAdapter(getActivity(),null,0, positionToSelect);
-        score_list.setAdapter(mAdapter);
+        scoreList.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER,null,this);
         mAdapter.detail_match_id = MainActivity.selected_match_id;
-        score_list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        scoreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ViewHolder selected = (ViewHolder) view.getTag();
                 mAdapter.detail_match_id = selected.match_id;
                 MainActivity.selected_match_id = (int) selected.match_id;
@@ -102,7 +102,10 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         }
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
         mAdapter.swapCursor(cursor);
-        //mAdapter.notifyDataSetChanged();
+
+        if (scoreList != null && positionToSelect != ListView.INVALID_POSITION) {
+            scoreList.setSelection(positionToSelect);
+        }
     }
 
     @Override
