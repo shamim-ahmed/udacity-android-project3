@@ -4,12 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 /**
@@ -17,6 +25,8 @@ import barqsoft.footballscores.util.Utilities;
  */
 public class ScoresAdapter extends CursorAdapter
 {
+    private static final String TAG = ScoresAdapter.class.getSimpleName();
+
     public static final int COL_HOME = 3;
     public static final int COL_AWAY = 4;
     public static final int COL_HOME_GOALS = 6;
@@ -28,9 +38,13 @@ public class ScoresAdapter extends CursorAdapter
     public static final int COL_MATCHTIME = 2;
     public double detail_match_id = 0;
 
-    public ScoresAdapter(Context context, Cursor cursor, int flags)
+    private final int positionToSelect;
+    private boolean itemSelected = false;
+
+    public ScoresAdapter(Context context, Cursor cursor, int flags, int positionToSelect)
     {
         super(context,cursor,flags);
+        this.positionToSelect = positionToSelect;
     }
 
     @Override
@@ -90,6 +104,22 @@ public class ScoresAdapter extends CursorAdapter
             container.removeAllViews();
         }
 
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent){
+
+        View item = super.getView(position, convertView, parent);
+        item.clearFocus();
+
+        if (positionToSelect != Constants.INVALID_SELECTED_INDEX && position == positionToSelect && !itemSelected) {
+            if (parent instanceof  ListView) {
+                Log.i(TAG, String.format("selecting position: %d", positionToSelect));
+                ((ListView) parent).performItemClick(item, position, item.getId());
+                itemSelected = true;
+            }
+        }
+
+        return item;
     }
     public Intent createShareForecastIntent(String ShareText, String hashTag) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);

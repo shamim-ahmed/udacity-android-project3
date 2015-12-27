@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -73,6 +74,7 @@ public class MultipleMatchIntentService extends RemoteViewsService {
                 Utilities.populateView(values, views, getApplicationContext());
 
                 final Intent fillInIntent = new Intent();
+                fillInIntent.putExtra(Constants.SELECTED_INDEX_ATTRIBUTE, position);
                 views.setOnClickFillInIntent(R.id.list_item_root, fillInIntent);
 
                 return views;
