@@ -43,9 +43,10 @@ public class BarCodeScanActivity extends Activity implements ZXingScannerView.Re
     }
 
     private void saveBarcode(String barcode) {
+        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.SCANNED_BARCODE_KEY, barcode);
+        editor.putString(scannedBarcodeKey, barcode);
         editor.apply();
     }
 }

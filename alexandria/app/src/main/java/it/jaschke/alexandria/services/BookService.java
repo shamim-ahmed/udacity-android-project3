@@ -178,17 +178,17 @@ public class BookService extends IntentService {
 
             String title = bookInfo.getString(TITLE);
 
-            String subtitle = "";
+            String subtitle = Constants.EMPTY_STRING;
             if(bookInfo.has(SUBTITLE)) {
                 subtitle = bookInfo.getString(SUBTITLE);
             }
 
-            String desc="";
+            String desc = Constants.EMPTY_STRING;
             if(bookInfo.has(DESC)){
                 desc = bookInfo.getString(DESC);
             }
 
-            String imgUrl = "";
+            String imgUrl = Constants.EMPTY_STRING;
             if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(THUMBNAIL_URL)) {
                 imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(THUMBNAIL_URL);
             }

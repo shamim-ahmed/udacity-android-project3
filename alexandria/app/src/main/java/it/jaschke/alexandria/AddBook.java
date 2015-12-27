@@ -152,8 +152,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onResume() {
         super.onResume();
 
+        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String barcode = prefs.getString(Constants.SCANNED_BARCODE_KEY, null);
+        String barcode = prefs.getString(scannedBarcodeKey, null);
         Log.i(LOG_TAG, String.format("the scanned barcode is : %s", barcode));
 
         if (ean != null && barcode != null) {
@@ -237,9 +238,10 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     private void clearBarcodeValue() {
+        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(Constants.SCANNED_BARCODE_KEY);
+        editor.remove(scannedBarcodeKey);
         editor.apply();
     }
 }
