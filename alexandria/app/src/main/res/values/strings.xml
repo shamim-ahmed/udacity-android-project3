@@ -30,4 +30,30 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="about_text">This application gets book information from a Google API. All titles, cover images, and author information come from there.
     The original version of this app was built by Sascha Jaschke, and a modified version is given to students in the Udacity Android Nanodegree program. </string>
+
+    <!-- non translatable strings -->
+    <string name="api_base_url" translatable="false">https://www.googleapis.com/books/v1/volumes?</string>
+    <string name="query_param_name" translatable="false">q</string>
+    <string name="isbn_param_name" translatable="false">isbn</string>
+    <string name="http_get_method" translatable="false">GET</string>
+    <string name="isbn10_prefix" translatable="false">978</string>
+    <string name="ean_content" translatable="false">eanContent</string>
+    <string name="ean_key" translatable="false">EAN</string>
+    <string name="text_plain_mime_type" translatable="false">text/plain</string>
+    <string name="pref_start_fragment" translatable="false">pref_startFragment</string>
+    <string name="pref_default_fragment" translatable="false">0</string>
+    <string name="back_stack_name" translatable="false">Book Detail</string>
+    <string name="message_event" translatable="false">MESSAGE_EVENT</string>
+    <string name="message_extra_key" translatable="false">MESSAGE_EXTRA</string>
+
+    <!-- json fields -->
+    <string name="json_field_items" translatable="false">items</string>
+    <string name="json_field_volumeInfo" translatable="false">volumeInfo</string>
+    <string name="json_field_title" translatable="false">title</string>
+    <string name="json_field_subtitle" translatable="false">subtitle</string>
+    <string name="json_field_authors" translatable="false">authors</string>
+    <string name="json_field_description" translatable="false">description</string>
+    <string name="json_field_categories" translatable="false">categories</string>
+    <string name="json_field_imageLinks" translatable="false">imageLinks</string>
+    <string name="json_field_thumbnail" translatable="false">thumbnail</string>
 </resources>

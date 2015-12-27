@@ -18,6 +18,7 @@ import android.widget.ListView;
 import it.jaschke.alexandria.api.BookListAdapter;
 import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.utils.Constants;
 
 
 public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -26,8 +27,6 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     private ListView bookList;
     private int position = ListView.INVALID_POSITION;
     private EditText searchText;
-
-    private final int LOADER_ID = 10;
 
     public ListOfBooks() {
     }
@@ -80,7 +79,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
     }
 
     private void restartLoader(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
+        getLoaderManager().restartLoader(Constants.LOADER_ID, null, this);
     }
 
     @Override
@@ -90,7 +89,7 @@ public class ListOfBooks extends Fragment implements LoaderManager.LoaderCallbac
         String searchString =searchText.getText().toString();
 
         if(searchString.length()>0){
-            searchString = "%"+searchString+"%";
+            searchString = Constants.SQL_PERCENTAGE_STRING + searchString + Constants.SQL_PERCENTAGE_STRING;
             return new CursorLoader(
                     getActivity(),
                     AlexandriaContract.BookEntry.CONTENT_URI,

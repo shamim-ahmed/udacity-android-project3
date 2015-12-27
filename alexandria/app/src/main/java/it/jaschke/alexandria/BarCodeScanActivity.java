@@ -15,8 +15,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * A simple activity for bar code scan
  */
 public class BarCodeScanActivity extends Activity implements ZXingScannerView.ResultHandler {
-    private static final String TAG = BarCodeScanActivity.class.getSimpleName();
-
     private ZXingScannerView scannerView;
 
     @Override

@@ -22,6 +22,7 @@ import java.net.URL;
 import it.jaschke.alexandria.MainActivity;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.utils.Constants;
 
 
 /**
@@ -39,7 +40,7 @@ public class BookService extends IntentService {
     public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
 
     public BookService() {
-        super("Alexandria");
+        super(Constants.APP_NAME);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class BookService extends IntentService {
      */
     private void fetchBook(String ean) {
 
-        if(ean.length()!=13){
+        if(ean.length() != Constants.ISBN13_EAN_LENGTH){
             return;
         }
 
@@ -96,10 +97,10 @@ public class BookService extends IntentService {
         String bookJsonString = null;
 
         try {
-            final String FORECAST_BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
-            final String QUERY_PARAM = "q";
+            final String FORECAST_BASE_URL = getString(R.string.api_base_url);
+            final String QUERY_PARAM = getString(R.string.query_param_name);
 
-            final String ISBN_PARAM = "isbn:" + ean;
+            final String ISBN_PARAM = String.format("%s:%s", getString(R.string.isbn_param_name), ean);
 
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                     .appendQueryParameter(QUERY_PARAM, ISBN_PARAM)
@@ -110,11 +111,11 @@ public class BookService extends IntentService {
             Log.i(LOG_TAG, "the URI is " + builtUri.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestMethod(getString(R.string.http_get_method));
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 return;
             }
@@ -146,17 +147,17 @@ public class BookService extends IntentService {
 
         }
 
-        final String ITEMS = "items";
+        final String ITEMS = getString(R.string.json_field_items);
 
-        final String VOLUME_INFO = "volumeInfo";
+        final String VOLUME_INFO = getString(R.string.json_field_volumeInfo);
 
-        final String TITLE = "title";
-        final String SUBTITLE = "subtitle";
-        final String AUTHORS = "authors";
-        final String DESC = "description";
-        final String CATEGORIES = "categories";
-        final String IMG_URL_PATH = "imageLinks";
-        final String IMG_URL = "thumbnail";
+        final String TITLE = getString(R.string.json_field_title);
+        final String SUBTITLE = getString(R.string.json_field_subtitle);
+        final String AUTHORS = getString(R.string.json_field_authors);
+        final String DESC = getString(R.string.json_field_description);
+        final String CATEGORIES = getString(R.string.json_field_categories);
+        final String IMG_URL_PATH = getString(R.string.json_field_imageLinks);
+        final String THUMBNAIL_URL = getString(R.string.json_field_thumbnail);
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
@@ -164,8 +165,11 @@ public class BookService extends IntentService {
             if(bookJson.has(ITEMS)){
                 bookArray = bookJson.getJSONArray(ITEMS);
             }else{
-                Intent messageIntent = new Intent(MainActivity.MESSAGE_EVENT);
-                messageIntent.putExtra(MainActivity.MESSAGE_KEY,getResources().getString(R.string.not_found));
+                final String messageEvent = getString(R.string.message_event);
+                final String messageKey = getString(R.string.message_extra_key);
+
+                Intent messageIntent = new Intent(messageEvent);
+                messageIntent.putExtra(messageKey, getString(R.string.not_found));
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(messageIntent);
                 return;
             }
@@ -185,8 +189,8 @@ public class BookService extends IntentService {
             }
 
             String imgUrl = "";
-            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(IMG_URL)) {
-                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
+            if(bookInfo.has(IMG_URL_PATH) && bookInfo.getJSONObject(IMG_URL_PATH).has(THUMBNAIL_URL)) {
+                imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(THUMBNAIL_URL);
             }
 
             writeBackBook(ean, title, subtitle, desc, imgUrl);
