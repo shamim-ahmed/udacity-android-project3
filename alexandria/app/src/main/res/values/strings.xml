@@ -48,6 +48,9 @@
     <string name="scanned_barcode_key" translatable="false">scanned_barcode</string>
     <string name="selected_navigation_drawer_position" translatable="false">selected_navigation_drawer_position</string>
     <string name="navigation_drawer_learned" translatable="false">navigation_drawer_learned</string>
+    <string name="action_fetch_book" translatable="false">it.jaschke.alexandria.services.action.FETCH_BOOK</string>
+    <string name="action_delete_book" translatable="false">it.jaschke.alexandria.services.action.DELETE_BOOK</string>
+    <string name="ean_extra_key" translatable="false">it.jaschke.alexandria.services.extra.EAN</string>
 
     <!-- json fields -->
     <string name="json_field_items" translatable="false">items</string>

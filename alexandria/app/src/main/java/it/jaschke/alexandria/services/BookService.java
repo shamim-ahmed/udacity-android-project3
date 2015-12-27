@@ -33,10 +33,9 @@ public class BookService extends IntentService {
 
     private final String LOG_TAG = BookService.class.getSimpleName();
 
-    public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
-    public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
-
-    public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
+    private final String fetchBookAction = getString(R.string.action_fetch_book);
+    private final String deleteBookAction = getString(R.string.action_delete_book);
+    private final String eanExtraKey = getString(R.string.ean_extra_key);
 
     public BookService() {
         super(Constants.APP_NAME);
@@ -46,11 +45,11 @@ public class BookService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (FETCH_BOOK.equals(action)) {
-                final String ean = intent.getStringExtra(EAN);
+            if (fetchBookAction.equals(action)) {
+                final String ean = intent.getStringExtra(eanExtraKey);
                 fetchBook(ean);
-            } else if (DELETE_BOOK.equals(action)) {
-                final String ean = intent.getStringExtra(EAN);
+            } else if (deleteBookAction.equals(action)) {
+                final String ean = intent.getStringExtra(eanExtraKey);
                 deleteBook(ean);
             }
         }
@@ -61,7 +60,7 @@ public class BookService extends IntentService {
      * parameters.
      */
     private void deleteBook(String ean) {
-        if(ean!=null) {
+        if(ean != null) {
             getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
         }
     }
@@ -123,7 +122,7 @@ public class BookService extends IntentService {
             String line;
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
-                buffer.append("\n");
+                buffer.append(Constants.NEWLINE);
             }
 
             if (buffer.length() == 0) {
