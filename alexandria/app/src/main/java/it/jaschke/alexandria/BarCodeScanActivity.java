@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import it.jaschke.alexandria.utils.Constants;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**

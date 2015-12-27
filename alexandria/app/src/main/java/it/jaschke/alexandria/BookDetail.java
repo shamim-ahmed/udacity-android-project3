@@ -1,7 +1,9 @@
 package it.jaschke.alexandria;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -94,7 +96,12 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
         ((TextView) rootView.findViewById(R.id.fullBookTitle)).setText(bookTitle);
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+
+        // added a version check to ensure that the app does not crash at runtime
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            addNewDocumentFlag(shareIntent);
+        }
+
         shareIntent.setType(getString(R.string.text_plain_mime_type));
         shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + bookTitle);
         shareActionProvider.setShareIntent(shareIntent);
@@ -122,6 +129,11 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
             rootView.findViewById(R.id.backButton).setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void addNewDocumentFlag(Intent shareIntent) {
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
     }
 
     @Override
