@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
+import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 public class SingleMatchIntentService extends IntentService {
@@ -44,7 +45,8 @@ public class SingleMatchIntentService extends IntentService {
 
             // configure what happens when the widget is clicked
             Intent appIntent = new Intent(appContext, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0, appIntent, 0);
+            appIntent.putExtra(Constants.SELECTED_INDEX_ATTRIBUTE, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.widget_root_layout, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, views);
