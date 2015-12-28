@@ -50,6 +50,10 @@ public class PagerFragment extends Fragment
         mPagerHandler.setCurrentItem(MainActivity.current_fragment);
         return rootView;
     }
+
+    // A potential problem was fixed related to the order of the tabs (e.g. 'Today', 'Tomorrow')
+    // in right-to-left locales. After the modification, the order of the tabs get reversed
+    // for right-to-left locales. This only works for Jelly Bean and later versions.
     private class CustomPageAdapter extends FragmentStatePagerAdapter
     {
         @Override
