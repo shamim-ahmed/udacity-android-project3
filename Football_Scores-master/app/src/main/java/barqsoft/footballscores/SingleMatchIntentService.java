@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 public class SingleMatchIntentService extends IntentService {
