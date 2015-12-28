@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -29,6 +30,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     private String[] fragmentdate = new String[1];
     private ListView scoreList;
     private int positionToSelect = ListView.INVALID_POSITION;
+    private boolean positionSelected = false;
 
     public MainScreenFragment()
     {
@@ -59,7 +61,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
         mAdapter = new ScoresAdapter(getActivity(),null,0, positionToSelect);
         scoreList.setAdapter(mAdapter);
-        getLoaderManager().initLoader(SCORES_LOADER,null,this);
+        getLoaderManager().initLoader(SCORES_LOADER, null, this);
         mAdapter.detail_match_id = MainActivity.selected_match_id;
         scoreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,8 +105,9 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
         mAdapter.swapCursor(cursor);
 
-        if (scoreList != null && positionToSelect != ListView.INVALID_POSITION) {
+        if (scoreList != null && positionToSelect != ListView.INVALID_POSITION && !positionSelected) {
             scoreList.setSelection(positionToSelect);
+            positionSelected = true;
         }
     }
 
