@@ -45,8 +45,7 @@ public class SingleMatchIntentService extends IntentService {
 
             // configure what happens when the widget is clicked
             Intent appIntent = new Intent(appContext, MainActivity.class);
-            appIntent.putExtra(Constants.SELECTED_INDEX_ATTRIBUTE, 0);
-            PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0, appIntent, 0);
             views.setOnClickPendingIntent(R.id.widget_root_layout, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, views);
