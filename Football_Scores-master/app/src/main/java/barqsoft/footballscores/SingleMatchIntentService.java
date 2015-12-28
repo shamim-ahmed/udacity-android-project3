@@ -56,6 +56,8 @@ public class SingleMatchIntentService extends IntentService {
     }
 
     private void updateView(Context context, RemoteViews views) {
+        // a potential problem was fixed here related to Locale. For searching
+        // in database, US locale needs to be used, irrespective of the user's preferred locale.
         SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();

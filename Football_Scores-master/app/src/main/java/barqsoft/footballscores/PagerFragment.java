@@ -40,6 +40,8 @@ public class PagerFragment extends Fragment
         for (int i = 0;i < NUM_PAGES;i++)
         {
             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)* Constants.NUMBER_OF_MILLISECONDS_IN_DAY));
+            // a potential problem was fixed here related to Locale. For searching
+            // in database, US locale needs to be used, irrespective of the user's preferred locale.
             SimpleDateFormat mformat = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
             viewFragments[i] = new MainScreenFragment();
             viewFragments[i].setFragmentDate(mformat.format(fragmentdate));
