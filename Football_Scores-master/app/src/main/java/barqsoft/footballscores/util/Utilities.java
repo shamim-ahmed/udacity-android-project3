@@ -129,7 +129,7 @@ public class Utilities {
 
     public static void populateView(ContentValues values, RemoteViews views, Context context) {
         String homeGoals = values.getAsString(DatabaseContract.ScoresTable.HOME_GOALS_COL);
-        String invalidScore = context.getString(R.string.invalid_score);
+        String invalidScore = Constants.INVALID_SCORE;
 
         if (invalidScore.equals(homeGoals)) {
             homeGoals = "";

@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
+import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
 
 public class SingleMatchIntentService extends IntentService {
@@ -56,7 +57,7 @@ public class SingleMatchIntentService extends IntentService {
     private void updateView(Context context, RemoteViews views) {
         // a potential problem was fixed here related to Locale. For searching
         // in database, US locale needs to be used, irrespective of the user's preferred locale.
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_SHORT, Locale.US);
         String dateStr = dateFormatter.format(new Date());
         Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 

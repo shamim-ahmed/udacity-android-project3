@@ -4,18 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import barqsoft.footballscores.util.Constants;
 import barqsoft.footballscores.util.Utilities;
@@ -104,7 +97,7 @@ public class ScoresAdapter extends CursorAdapter
     public Intent createShareForecastIntent(String ShareText, String hashTag) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        shareIntent.setType(mContext.getString(R.string.text_mime_type));
+        shareIntent.setType(Constants.TEXT_MIME_TYPE);
         shareIntent.putExtra(Intent.EXTRA_TEXT, ShareText + hashTag);
         return shareIntent;
     }

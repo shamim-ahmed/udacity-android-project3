@@ -42,7 +42,7 @@ public class PagerFragment extends Fragment
             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)* Constants.NUMBER_OF_MILLISECONDS_IN_DAY));
             // a potential problem was fixed here related to Locale. For searching
             // in database, US locale needs to be used, irrespective of the user's preferred locale.
-            SimpleDateFormat mformat = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
+            SimpleDateFormat mformat = new SimpleDateFormat(Constants.DATE_FORMAT_SHORT, Locale.US);
             viewFragments[i] = new MainScreenFragment();
             viewFragments[i].setFragmentDate(mformat.format(fragmentdate));
         }
@@ -101,7 +101,7 @@ public class PagerFragment extends Fragment
                 Time time = new Time();
                 time.setToNow();
                 // Otherwise, the format is just the day of the week (e.g "Wednesday".
-                SimpleDateFormat dayFormat = new SimpleDateFormat(getString(R.string.date_format_day_of_week), Locale.getDefault());
+                SimpleDateFormat dayFormat = new SimpleDateFormat(Constants.DATE_FORMAT_DAY_OF_WEEK, Locale.getDefault());
                 return dayFormat.format(dateInMillis);
             }
         }

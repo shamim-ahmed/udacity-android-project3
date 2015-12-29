@@ -41,7 +41,7 @@ public class MultipleMatchIntentService extends RemoteViewsService {
                 // initialize the new cursor
                 // a potential problem was fixed here related to Locale. For searching
                 // in database, US locale needs to be used, irrespective of the user's preferred locale.
-                SimpleDateFormat dateFormatter = new SimpleDateFormat(getString(R.string.date_format_short), Locale.US);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_SHORT, Locale.US);
                 String dateStr = dateFormatter.format(new Date());
                 Uri searchUri = DatabaseContract.ScoresTable.buildScoreWithDate();
 

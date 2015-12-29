@@ -12,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
+import barqsoft.footballscores.util.Constants;
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MultipleMatchWidgetProvider extends AppWidgetProvider {
     @Override
@@ -45,7 +47,7 @@ public class MultipleMatchWidgetProvider extends AppWidgetProvider {
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
 
-        String actionDataUpdated = context.getString(R.string.action_data_updated);
+        String actionDataUpdated = Constants.ACTION_DATA_UPDATED;
 
         if (actionDataUpdated.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
