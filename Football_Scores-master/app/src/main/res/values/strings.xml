@@ -59,7 +59,7 @@
     <string name="team_name_stoke_city">Stoke City FC</string>
 
     <!-- non translatable strings -->
-    <string name="api_key" translatable="false">3c4d75bf88c1459c9c6bc79c8ebc1ccf</string>
+    <string name="api_key" translatable="false"></string>
     <string name="timeframe_next_two" translatable="false">n2</string>
     <string name="timeframe_previous_two" translatable="false">p2</string>
     <string name="api_fixtures_base_url" translatable="false">http://api.football-data.org/alpha/fixtures/</string>
