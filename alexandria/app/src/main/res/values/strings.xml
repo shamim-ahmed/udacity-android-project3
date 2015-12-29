@@ -43,7 +43,6 @@
     <string name="back_stack_name" translatable="false">Book Detail</string>
     <string name="message_event" translatable="false">MESSAGE_EVENT</string>
     <string name="message_extra_key" translatable="false">MESSAGE_EXTRA</string>
-    <string name="scanned_barcode_key" translatable="false">scanned_barcode</string>
 
     <!-- json fields -->
     <string name="json_field_items" translatable="false">items</string>

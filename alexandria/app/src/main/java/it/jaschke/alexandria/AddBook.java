@@ -3,10 +3,8 @@ package it.jaschke.alexandria;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -57,8 +55,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        clearBarcodeValue();
-
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
 
@@ -115,10 +111,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getActivity();
-                Intent scanIntent = new Intent(context, BarCodeScanActivity.class);
-                context.startActivity(scanIntent);
-                clearBarcodeValue();
+                Activity activity = getActivity();
+                Intent scanIntent = new Intent(activity, BarCodeScanActivity.class);
+                startActivityForResult(scanIntent, Constants.BARCODE_SCAN_REQUEST_CODE);
                 ean.setText(Constants.EMPTY_STRING);
             }
         });
@@ -150,16 +145,16 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.BARCODE_SCAN_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String barcode = data.getStringExtra(Constants.SCANNED_BARCODE_KEY);
+                Log.i(LOG_TAG, String.format("the scanned barcode is : %s", barcode));
 
-        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String barcode = prefs.getString(scannedBarcodeKey, null);
-        Log.i(LOG_TAG, String.format("the scanned barcode is : %s", barcode));
-
-        if (ean != null && barcode != null) {
-            ean.setText(barcode);
+                if (ean != null && barcode != null) {
+                    ean.setText(barcode);
+                }
+            }
         }
     }
 
@@ -241,13 +236,5 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.scan);
-    }
-
-    private void clearBarcodeValue() {
-        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(scannedBarcodeKey);
-        editor.apply();
     }
 }

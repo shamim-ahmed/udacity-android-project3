@@ -31,11 +31,11 @@
     <string name="away_crest_description">Away Team Crest</string>
 
     <!-- league names -->
-    <string name="league_name_serie_a">Seria A</string>
-    <string name="league_name_premier">Premier League</string>
-    <string name="league_name_uefa_champions">UEFA Champions League</string>
-    <string name="league_name_primera_division">Primera Division</string>
-    <string name="league_name_bundesliga">Bundesliga</string>
+    <string name="league_name_serie_a" translatable="false">Seria A</string>
+    <string name="league_name_premier" translatable="false">Premier League</string>
+    <string name="league_name_uefa_champions" translatable="false">UEFA Champions League</string>
+    <string name="league_name_primera_division" translatable="false">Primera Division</string>
+    <string name="league_name_bundesliga" translatable="false">Bundesliga</string>
     <string name="league_name_unknown">Not known League Please report</string>
 
     <!-- match day strings -->
@@ -47,16 +47,16 @@
     <string name="match_day_generic_prefix">Matchday : </string>
 
     <!-- team names -->
-    <string name="team_name_arsenal">Arsenal London FC</string>
-    <string name="team_name_manchester">Manchester United FC</string>
-    <string name="team_name_swansea">Swansea City</string>
-    <string name="team_name_leicester">Leicester City</string>
-    <string name="team_name_everton">Everton FC</string>
-    <string name="team_name_west_ham_united">West Ham United FC</string>
-    <string name="team_name_tottenham">Tottenham Hotspur FC</string>
-    <string name="team_name_west_bromwich">West Bromwich Albion</string>
-    <string name="team_name_sutherland">Sunderland AFC</string>
-    <string name="team_name_stoke_city">Stoke City FC</string>
+    <string name="team_name_arsenal" translatable="false">Arsenal London FC</string>
+    <string name="team_name_manchester" translatable="false">Manchester United FC</string>
+    <string name="team_name_swansea" translatable="false">Swansea City</string>
+    <string name="team_name_leicester" translatable="false">Leicester City</string>
+    <string name="team_name_everton" translatable="false">Everton FC</string>
+    <string name="team_name_west_ham_united" translatable="false">West Ham United FC</string>
+    <string name="team_name_tottenham" translatable="false">Tottenham Hotspur FC</string>
+    <string name="team_name_west_bromwich" translatable="false">West Bromwich Albion</string>
+    <string name="team_name_sutherland" translatable="false">Sunderland AFC</string>
+    <string name="team_name_stoke_city" translatable="false">Stoke City FC</string>
 
     <!-- non translatable strings -->
     <string name="api_key" translatable="false"></string>

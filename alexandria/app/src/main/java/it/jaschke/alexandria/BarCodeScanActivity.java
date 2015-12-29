@@ -3,9 +3,10 @@ package it.jaschke.alexandria;
 import com.google.zxing.Result;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+
+import it.jaschke.alexandria.utils.Constants;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -37,14 +38,9 @@ public class BarCodeScanActivity extends Activity implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result result) {
-        saveBarcode(result.getText());
-    }
-
-    private void saveBarcode(String barcode) {
-        final String scannedBarcodeKey = getString(R.string.scanned_barcode_key);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(scannedBarcodeKey, barcode);
-        editor.apply();
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(Constants.SCANNED_BARCODE_KEY, result.toString());
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 }
