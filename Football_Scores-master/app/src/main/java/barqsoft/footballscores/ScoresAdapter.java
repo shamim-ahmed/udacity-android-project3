@@ -37,13 +37,9 @@ public class ScoresAdapter extends CursorAdapter
     public static final int COL_MATCHTIME = 2;
     public double detail_match_id = 0;
 
-    private final int positionToSelect;
-    private boolean itemSelected = false;
-
-    public ScoresAdapter(Context context, Cursor cursor, int flags, int positionToSelect)
+    public ScoresAdapter(Context context, Cursor cursor, int flags)
     {
         super(context,cursor,flags);
-        this.positionToSelect = positionToSelect;
     }
 
     @Override
@@ -105,21 +101,6 @@ public class ScoresAdapter extends CursorAdapter
 
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
-
-        View item = super.getView(position, convertView, parent);
-        item.clearFocus();
-
-        if (positionToSelect != ListView.INVALID_POSITION && position == positionToSelect && !itemSelected) {
-            if (parent instanceof  ListView) {
-                Log.i(TAG, String.format("selecting position: %d", positionToSelect));
-                ((ListView) parent).performItemClick(item, position, item.getId());
-                itemSelected = true;
-            }
-        }
-
-        return item;
-    }
     public Intent createShareForecastIntent(String ShareText, String hashTag) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
