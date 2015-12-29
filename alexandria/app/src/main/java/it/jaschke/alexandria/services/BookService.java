@@ -96,10 +96,10 @@ public class BookService extends IntentService {
         String bookJsonString = null;
 
         try {
-            final String FORECAST_BASE_URL = getString(R.string.api_base_url);
-            final String QUERY_PARAM = getString(R.string.query_param_name);
+            final String FORECAST_BASE_URL = Constants.API_BASE_URL;
+            final String QUERY_PARAM = Constants.QUERY_PARAM_NAME;
 
-            final String ISBN_PARAM = String.format("%s:%s", getString(R.string.isbn_param_name), ean);
+            final String ISBN_PARAM = String.format("%s:%s", Constants.ISBN_PARAM_NAME, ean);
 
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                     .appendQueryParameter(QUERY_PARAM, ISBN_PARAM)
@@ -110,7 +110,7 @@ public class BookService extends IntentService {
             Log.i(LOG_TAG, "the URI is " + builtUri.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod(getString(R.string.http_get_method));
+            urlConnection.setRequestMethod(Constants.HTTP_GET_METHOD);
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
@@ -146,17 +146,17 @@ public class BookService extends IntentService {
 
         }
 
-        final String ITEMS = getString(R.string.json_field_items);
+        final String ITEMS = Constants.JSON_FIELD_ITEMS;
 
-        final String VOLUME_INFO = getString(R.string.json_field_volumeInfo);
+        final String VOLUME_INFO = Constants.JSON_FIELD_VOLUMEINFO;
 
-        final String TITLE = getString(R.string.json_field_title);
-        final String SUBTITLE = getString(R.string.json_field_subtitle);
-        final String AUTHORS = getString(R.string.json_field_authors);
-        final String DESC = getString(R.string.json_field_description);
-        final String CATEGORIES = getString(R.string.json_field_categories);
-        final String IMG_URL_PATH = getString(R.string.json_field_imageLinks);
-        final String THUMBNAIL_URL = getString(R.string.json_field_thumbnail);
+        final String TITLE = Constants.JSON_FIELD_TITLE;
+        final String SUBTITLE = Constants.JSON_FIELD_SUBTITLE;
+        final String AUTHORS = Constants.JSON_FIELD_AUTHORS;
+        final String DESC = Constants.JSON_FIELD_DESCRIPTION;
+        final String CATEGORIES = Constants.JSON_FIELD_CATEGORIES;
+        final String IMG_URL_PATH = Constants.JSON_FIELD_IMAGELINKS;
+        final String THUMBNAIL_URL = Constants.JSON_FIELD_THUMBNAIL;
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
@@ -164,8 +164,8 @@ public class BookService extends IntentService {
             if(bookJson.has(ITEMS)){
                 bookArray = bookJson.getJSONArray(ITEMS);
             }else{
-                final String messageEvent = getString(R.string.message_event);
-                final String messageKey = getString(R.string.message_extra_key);
+                final String messageEvent = Constants.MESSAGE_EVENT;
+                final String messageKey = Constants.MESSAGE_EXTRA_KEY;
 
                 Intent messageIntent = new Intent(messageEvent);
                 messageIntent.putExtra(messageKey, getString(R.string.not_found));

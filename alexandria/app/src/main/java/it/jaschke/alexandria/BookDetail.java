@@ -100,7 +100,7 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
             addNewDocumentFlag(shareIntent);
         }
 
-        shareIntent.setType(getString(R.string.text_plain_mime_type));
+        shareIntent.setType(Constants.TEXT_PLAIN_MIME_TYPE);
         shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + bookTitle);
 
         if (shareActionProvider != null) {

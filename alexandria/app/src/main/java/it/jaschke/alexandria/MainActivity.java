@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             setContentView(R.layout.activity_main);
         }
 
-        final String messageEvent = getString(R.string.message_event);
+        final String messageEvent = Constants.MESSAGE_EVENT;
         messageReciever = new MessageReciever();
         IntentFilter filter = new IntentFilter(messageEvent);
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -144,7 +144,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment)
-                .addToBackStack(getString(R.string.back_stack_name))
+                .addToBackStack(Constants.BACK_STACK_NAME)
                 .commit();
 
     }
@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     private class MessageReciever extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String messageKey = getString(R.string.message_extra_key);
+            final String messageKey = Constants.MESSAGE_EXTRA_KEY;
 
             if(intent.getStringExtra(messageKey)!=null){
                 Toast.makeText(MainActivity.this, intent.getStringExtra(messageKey), Toast.LENGTH_LONG).show();

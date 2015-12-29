@@ -81,7 +81,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void afterTextChanged(Editable s) {
                 String ean = s.toString();
-                final String isbn10Prefix = getString(R.string.isbn10_prefix);
+                final String isbn10Prefix = Constants.ISBN10_PREFIX;
 
                 //catch isbn10 numbers
                 if(ean.length() == Constants.ISBN10_EAN_LENGTH && !ean.startsWith(isbn10Prefix)){
@@ -168,7 +168,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             return null;
         }
         String eanStr= ean.getText().toString();
-        final String isbn10Prefix = getString(R.string.isbn10_prefix);
+        final String isbn10Prefix = Constants.ISBN10_PREFIX;
 
         if(eanStr.length() == Constants.ISBN10_EAN_LENGTH && !eanStr.startsWith(isbn10Prefix)){
             eanStr = isbn10Prefix + eanStr;

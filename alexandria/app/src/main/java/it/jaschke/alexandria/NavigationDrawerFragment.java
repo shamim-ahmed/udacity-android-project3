@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import it.jaschke.alexandria.utils.Constants;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -76,7 +78,7 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }else{
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            mCurrentSelectedPosition = Integer.parseInt(prefs.getString(getString(R.string.pref_start_fragment), getString(R.string.pref_default_fragment)));
+            mCurrentSelectedPosition = Integer.parseInt(prefs.getString(Constants.PREF_START_FRAGMENT, Constants.PREF_DEFAULT_FRAGMENT));
             selectItem(mCurrentSelectedPosition);
         }
 
